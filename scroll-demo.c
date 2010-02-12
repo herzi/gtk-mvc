@@ -21,19 +21,32 @@
  */
 
 #include <gtk/gtk.h>
+#include "gtk-scroll-view.h"
 
 int
 main (int   argc,
       char**argv)
 {
+  GtkWidget* box;
+  GtkWidget* scroll;
+  GtkWidget* viewport;
   GtkWidget* window;
 
   gtk_init (&argc, &argv);
 
-  window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  box      = gtk_hbox_new (FALSE, 0);
+  scroll   = gtk_scroll_view_new ();
+  window   = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  viewport = gtk_viewport_new (NULL, NULL);
+
   g_object_add_weak_pointer (G_OBJECT (window), (gpointer*)&window);
   g_signal_connect (window, "destroy",
                     G_CALLBACK (gtk_main_quit), NULL);
+
+  gtk_container_add (GTK_CONTAINER (box), viewport);
+  gtk_box_pack_start (GTK_BOX (box), scroll,
+                      FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (window), box);
 
   gtk_widget_show_all (window);
   gtk_main ();

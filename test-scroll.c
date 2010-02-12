@@ -20,13 +20,25 @@
  * if advised of the possibility of such damage.
  */
 
-/*#include "test-scroll.h"*/
+#include "gtk-scroll-view.h"
+
+static void
+test_view_constructor (void)
+{
+  GtkWidget* widget = gtk_scroll_view_new ();
+  g_object_ref_sink (widget);
+  g_object_unref (widget);
+}
 
 int
 main (int   argc,
       char**argv)
 {
-  return 0;
+  gtk_test_init (&argc, &argv, NULL);
+
+  g_test_add_func ("/scroll/view/constructor", test_view_constructor);
+
+  return g_test_run ();
 }
 
 /* vim:set et sw=2 cino=t0,f0,(0,{s,>2s,n-1s,^-1s,e2s: */
