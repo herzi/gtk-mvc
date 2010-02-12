@@ -73,6 +73,7 @@ set_property (GObject     * object,
     {
     case PROP_VIEW:
       g_return_if_fail (!PRIV (object)->view);
+      g_return_if_fail (!g_value_get_object (value) || GTK_MVC_IS_VIEW (g_value_get_object (value)));
 
       PRIV (object)->view = g_value_dup_object (value);
       g_object_notify (object, "view");

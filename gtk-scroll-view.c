@@ -20,7 +20,8 @@
 
 #include "gtk-scroll-view.h"
 
-G_DEFINE_TYPE (GtkScrollView, gtk_scroll_view, GTK_TYPE_LABEL);
+G_DEFINE_TYPE_WITH_CODE (GtkScrollView, gtk_scroll_view, GTK_TYPE_LABEL,
+                         G_IMPLEMENT_INTERFACE (GTK_MVC_TYPE_VIEW, NULL));
 
 static void
 gtk_scroll_view_init (GtkScrollView* self)
