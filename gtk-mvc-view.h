@@ -36,16 +36,24 @@ typedef struct _GtkMvcViewIface GtkMvcViewIface;
 #define GTK_MVC_VIEW_GET_IFACE(i) (G_TYPE_INSTANCE_GET_INTERFACE ((i), GTK_MVC_TYPE_VIEW, GtkMvcViewIface))
 
 GType  gtk_mvc_view_get_type     (void);
-void   gtk_mvc_view_set_position (GtkMvcView       * view,
-                                  cairo_rectangle_t* position);
+void   gtk_mvc_view_paint        (GtkMvcView            * view,
+                                  cairo_t               * context,
+                                  cairo_rectangle_t     * area,
+                                  cairo_rectangle_list_t* region);
+void   gtk_mvc_view_set_position (GtkMvcView            * view,
+                                  cairo_rectangle_t     * position);
 
 struct _GtkMvcViewIface
 {
   GTypeInterface  base_interface;
 
   /* vtable */
-  void (*set_position) (GtkMvcView       * self,
-                        cairo_rectangle_t* rectangle);
+  void (*paint)        (GtkMvcView            * view,
+                        cairo_t               * context,
+                        cairo_rectangle_t     * area,
+                        cairo_rectangle_list_t* region);
+  void (*set_position) (GtkMvcView            * self,
+                        cairo_rectangle_t     * rectangle);
 };
 
 G_END_DECLS

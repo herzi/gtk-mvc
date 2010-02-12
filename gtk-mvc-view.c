@@ -45,6 +45,36 @@ gtk_mvc_view_get_type (void)
 }
 
 void
+gtk_mvc_view_paint (GtkMvcView            * self,
+                    cairo_t               * context,
+                    cairo_rectangle_t     * area,
+                    cairo_rectangle_list_t* region)
+{
+  GtkMvcViewIface* iface;
+
+  g_return_if_fail (GTK_MVC_IS_VIEW (self));
+  g_return_if_fail (area);
+  g_return_if_fail (region->status == CAIRO_STATUS_SUCCESS);
+
+  if (cairo_status (context) != CAIRO_STATUS_SUCCESS)
+    {
+      return;
+    }
+
+  iface = GTK_MVC_VIEW_GET_IFACE (self);
+  if (!iface->paint)
+    {
+      g_warning ("%s(%s): the type %s doesn't implement GtkMvcViewIface->paint()",
+                 G_STRFUNC, G_STRLOC,
+                 G_OBJECT_TYPE_NAME (self));
+    }
+  else
+    {
+      iface->paint (self, context, area, region);
+    }
+}
+
+void
 gtk_mvc_view_set_position (GtkMvcView       * self,
                            cairo_rectangle_t* position)
 {
