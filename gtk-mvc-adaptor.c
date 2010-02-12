@@ -84,10 +84,58 @@ set_property (GObject     * object,
     }
 }
 
+static gboolean
+expose_event (GtkWidget     * widget,
+              GdkEventExpose* event)
+{
+  if (PRIV (widget)->view)
+    {
+      cairo_rectangle_list_t  region = {
+              CAIRO_STATUS_SUCCESS,
+              NULL,
+              0
+      };
+      cairo_rectangle_t  area = {
+              0.0,
+              0.0,
+              event->area.width,
+              event->area.height
+      };
+      GdkRectangle          * rectangles = NULL;
+      cairo_t               * context = gdk_cairo_create (widget->window);
+      size_t                  iter;
+
+      gdk_region_get_rectangles (event->region, &rectangles, &region.num_rectangles);
+      region.rectangles = g_slice_alloc (sizeof (*region.rectangles) * region.num_rectangles);
+      for (iter = 0; iter < region.num_rectangles; iter++)
+        {
+          region.rectangles[iter].x = rectangles[iter].x - widget->allocation.x;
+          region.rectangles[iter].y = rectangles[iter].y - widget->allocation.y;
+          region.rectangles[iter].width = rectangles[iter].width - widget->allocation.x;
+          region.rectangles[iter].height = rectangles[iter].height - widget->allocation.y;
+        }
+      g_free (rectangles);
+
+      cairo_translate (context, widget->allocation.x, widget->allocation.y);
+      cairo_save (context);
+
+      gtk_mvc_view_paint (PRIV (widget)->view, context,
+                          &area, &region);
+
+      g_slice_free1 (sizeof (*region.rectangles) * region.num_rectangles, region.rectangles);
+
+      cairo_restore (context);
+      cairo_destroy (context);
+    }
+
+  return FALSE;
+}
+
 static void
 gtk_mvc_adaptor_class_init (GtkMvcAdaptorClass* self_class)
 {
-  GObjectClass* object_class = G_OBJECT_CLASS (self_class);
+  GObjectClass* object_class   = G_OBJECT_CLASS (self_class);
+  GtkWidgetClass* widget_class = GTK_WIDGET_CLASS (self_class);
 
   object_class->dispose      = dispose;
   object_class->get_property = get_property;
@@ -97,6 +145,8 @@ gtk_mvc_adaptor_class_init (GtkMvcAdaptorClass* self_class)
                                    g_param_spec_object ("view", NULL, NULL,
                                                         G_TYPE_OBJECT,
                                                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+
+  widget_class->expose_event = expose_event;
 
   g_type_class_add_private (self_class, sizeof (GtkMvcAdaptorPrivate));
 }
