@@ -29,7 +29,7 @@ struct _GtkMvcScrollViewPrivate
 
 static void implement_gtk_mvc_view (GtkMvcViewIface* iface);
 
-G_DEFINE_TYPE_WITH_CODE (GtkMvcScrollView, gtk_scroll_view, GTK_TYPE_LABEL,
+G_DEFINE_TYPE_WITH_CODE (GtkMvcScrollView, gtk_scroll_view, G_TYPE_INITIALLY_UNOWNED,
                          G_IMPLEMENT_INTERFACE (GTK_MVC_TYPE_VIEW, implement_gtk_mvc_view));
 
 static void
@@ -50,7 +50,10 @@ paint (GtkMvcView            * view,
        cairo_rectangle_t     * area,
        cairo_rectangle_list_t* region)
 {
-  /* FIXME: implement */
+  PangoLayout* layout = pango_cairo_create_layout (cr);
+  pango_layout_set_text (layout, "GtkMvcScrollView", -1);
+  pango_cairo_show_layout (cr, layout);
+  g_object_unref (layout);
 }
 
 static void
@@ -71,7 +74,6 @@ GtkMvcView*
 gtk_mvc_scroll_view_new (void)
 {
   return g_object_new (GTK_MVC_TYPE_SCROLL_VIEW,
-                       "label", "GtkScrollView",
                        NULL);
 }
 

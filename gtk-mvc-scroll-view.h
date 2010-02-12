@@ -42,13 +42,13 @@ GtkMvcView* gtk_mvc_scroll_view_new      (void);
 
 struct _GtkMvcScrollView
 {
-  GtkLabel                 base_instance;
+  GInitiallyUnowned        base_instance;
   GtkMvcScrollViewPrivate* _private;
 };
 
 struct _GtkMvcScrollViewClass
 {
-  GtkLabelClass            base_class;
+  GInitiallyUnownedClass   base_class;
 };
 
 G_END_DECLS
