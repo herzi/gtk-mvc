@@ -23,7 +23,9 @@
 GtkWidget*
 gtk_mvc_adaptor_new (void)
 {
-  return NULL;
+  return g_object_new (GTK_TYPE_LABEL,
+                       "label", "GtkMvcAdaptor",
+                       NULL);
 }
 
 /* vim:set et sw=2 cino=t0,f0,(0,{s,>2s,n-1s,^-1s,e2s: */

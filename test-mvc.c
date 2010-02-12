@@ -26,6 +26,7 @@ static void
 test_adaptor_constructor (void)
 {
   GtkWidget* widget = gtk_mvc_adaptor_new ();
+  g_assert (widget);
   g_object_ref_sink (widget);
 
   g_object_unref (widget);
