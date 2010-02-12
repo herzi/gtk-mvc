@@ -45,6 +45,15 @@ test_view_constructor (void)
   g_object_unref (view);
 }
 
+static void
+test_view_constructor_embed (void)
+{
+  GtkWidget* widget = gtk_mvc_adaptor_new (gtk_scroll_view_new ());
+  g_object_ref_sink (widget);
+
+  g_object_unref (widget);
+}
+
 int
 main (int   argc,
       char**argv)
@@ -53,6 +62,7 @@ main (int   argc,
 
   g_test_add_func ("/mvc-adaptor/constructor", test_adaptor_constructor);
   g_test_add_func ("/scroll/view/constructor", test_view_constructor);
+  g_test_add_func ("/scroll/view/constructor-embed", test_view_constructor_embed);
 
   return g_test_run ();
 }
