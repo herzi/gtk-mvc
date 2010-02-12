@@ -2,13 +2,13 @@ CCFLAGS=$(shell pkg-config --cflags gtk+-2.0)
 LDFLAGS=$(shell pkg-config --libs gtk+-2.0)
 CCLDFLAGS=$(CCFLAGS) $(LDFLAGS)
 
-all: scroll-demo test-scroll
+all: scroll-demo test-mvc
 
-check: test-scroll
-	./test-scroll
+check: test-mvc
+	./test-mvc
 
 clean:
-	rm -rf *.o libscoll.so scroll-demo test-scroll
+	rm -rf *.o libscoll.so scroll-demo test-mvc
 
 libscroll_so_sources=\
 	gtk-mvc-adaptor.c \
@@ -31,6 +31,6 @@ libscroll.so: $(libscroll_so_objects)
 scroll-demo: scroll-demo.c libscroll.so
 	gcc -o $@ $< -L. -lscroll -Wl,"-rpath=$(shell pwd)" $(CCLDFLAGS)
 
-test-scroll: test-scroll.c libscroll.so
+test-mvc: test-mvc.c libscroll.so
 	gcc -o $@ $< -L. -lscroll -Wl,"-rpath=$(shell pwd)" $(CCLDFLAGS)
 

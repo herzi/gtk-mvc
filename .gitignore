@@ -1,4 +1,4 @@
 libscroll.so
 *.o
 scroll-demo
-test-scroll
+test-mvc
