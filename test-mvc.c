@@ -54,6 +54,23 @@ test_view_constructor_embed (void)
   g_object_unref (widget);
 }
 
+static void
+test_scroll_view_paint (void)
+{
+  GdkRectangle  position = {0, 0, 150, 150};
+  GtkMvcView  * view = gtk_scroll_view_new ();
+  g_object_ref_sink (view);
+
+#if 0
+  gtk_scroll_view_set_position (view,
+                                &position);
+  gtk_scroll_view_paint (view, context, region);
+#endif
+  /* FIXME: make sure something was drawn */
+
+  g_object_unref (view);
+}
+
 int
 main (int   argc,
       char**argv)
@@ -63,6 +80,7 @@ main (int   argc,
   g_test_add_func ("/mvc-adaptor/constructor", test_adaptor_constructor);
   g_test_add_func ("/scroll/view/constructor", test_view_constructor);
   g_test_add_func ("/scroll/view/constructor-embed", test_view_constructor_embed);
+  g_test_add_func ("/scroll/view/paint", test_scroll_view_paint);
 
   return g_test_run ();
 }
