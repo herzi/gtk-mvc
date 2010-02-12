@@ -26,14 +26,14 @@ libscroll_so_sources=\
 libscroll_so_objects=$(patsubst %.c,%.o,$(filter %.c,$(libscroll_so_sources)))
 
 %.o: %.c $(filter %.h,$(libscroll_so_sources))
-	gcc -c -o $@ $< $(CCFLAGS)
+	gcc -g -c -o $@ $< $(CCFLAGS)
 
 libscroll.so: $(libscroll_so_objects)
-	gcc -shared -o $@ $^ $(LDFLAGS)
+	gcc -g -shared -o $@ $^ $(LDFLAGS)
 
 scroll-demo: scroll-demo.c libscroll.so
-	gcc -o $@ $< -L. -lscroll -Wl,"-rpath=$(shell pwd)" $(CCLDFLAGS)
+	gcc -g -o $@ $< -L. -lscroll -Wl,"-rpath=$(shell pwd)" $(CCLDFLAGS)
 
 test-mvc: test-mvc.c libscroll.so
-	gcc -o $@ $< -L. -lscroll -Wl,"-rpath=$(shell pwd)" $(CCLDFLAGS)
+	gcc -g -o $@ $< -L. -lscroll -Wl,"-rpath=$(shell pwd)" $(CCLDFLAGS)
 
