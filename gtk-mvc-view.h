@@ -18,24 +18,18 @@
  * USA
  */
 
-#include "gtk-scroll-view.h"
+#ifndef GTK_MVC_VIEW_H
+#define GTK_MVC_VIEW_H
 
-G_DEFINE_TYPE (GtkScrollView, gtk_scroll_view, GTK_TYPE_LABEL);
+#include <glib-object.h>
 
-static void
-gtk_scroll_view_init (GtkScrollView* self)
-{}
+G_BEGIN_DECLS
 
-static void
-gtk_scroll_view_class_init (GtkScrollViewClass* self_class)
-{}
+typedef struct _GtkMvcView      GtkMvcView;
+typedef struct _GtkMvcViewIface GtkMvcViewIface;
 
-GtkMvcView*
-gtk_scroll_view_new (void)
-{
-  return g_object_new (GTK_SCROLL_TYPE_VIEW,
-                       "label", "GtkScrollView",
-                       NULL);
-}
+G_END_DECLS
+
+#endif /* !GTK_MVC_VIEW_H */
 
 /* vim:set et sw=2 cino=t0,f0,(0,{s,>2s,n-1s,^-1s,e2s: */

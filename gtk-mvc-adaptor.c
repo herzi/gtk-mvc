@@ -31,7 +31,7 @@ gtk_mvc_adaptor_class_init (GtkMvcAdaptorClass* self_class)
 {}
 
 GtkWidget*
-gtk_mvc_adaptor_new (void)
+gtk_mvc_adaptor_new (GtkMvcView* view)
 {
   return g_object_new (GTK_MVC_TYPE_ADAPTOR,
                        "label", "GtkMvcAdaptor",

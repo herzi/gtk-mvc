@@ -25,7 +25,7 @@
 static void
 test_adaptor_constructor (void)
 {
-  GtkWidget* widget = gtk_mvc_adaptor_new ();
+  GtkWidget* widget = gtk_mvc_adaptor_new (NULL);
   g_assert (widget);
   g_object_ref_sink (widget);
 
@@ -37,12 +37,12 @@ test_adaptor_constructor (void)
 static void
 test_view_constructor (void)
 {
-  GtkWidget* widget = gtk_scroll_view_new ();
-  g_object_ref_sink (widget);
+  gpointer view = gtk_scroll_view_new ();
+  g_object_ref_sink (view);
 
-  g_assert_cmpstr (G_OBJECT_TYPE_NAME (widget), ==, "GtkScrollView");
+  g_assert_cmpstr (G_OBJECT_TYPE_NAME (view), ==, "GtkScrollView");
 
-  g_object_unref (widget);
+  g_object_unref (view);
 }
 
 int

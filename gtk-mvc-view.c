@@ -1,4 +1,7 @@
-/* This file is part of herzi's playground
+/* This file is part of ...
+ *
+ * AUTHORS
+ *     Sven Herzberg  <set the EMAIL_ADDRESS environment variable>
  *
  * Copyright (C) 2010  Sven Herzberg
  *
@@ -18,24 +21,7 @@
  * USA
  */
 
-#include "gtk-scroll-view.h"
+#include "gtk-mvc-view.h"
 
-G_DEFINE_TYPE (GtkScrollView, gtk_scroll_view, GTK_TYPE_LABEL);
-
-static void
-gtk_scroll_view_init (GtkScrollView* self)
-{}
-
-static void
-gtk_scroll_view_class_init (GtkScrollViewClass* self_class)
-{}
-
-GtkMvcView*
-gtk_scroll_view_new (void)
-{
-  return g_object_new (GTK_SCROLL_TYPE_VIEW,
-                       "label", "GtkScrollView",
-                       NULL);
-}
 
 /* vim:set et sw=2 cino=t0,f0,(0,{s,>2s,n-1s,^-1s,e2s: */

@@ -14,6 +14,8 @@ libscroll_so_sources=\
 	gtk-mvc.h \
 	gtk-mvc-adaptor.c \
 	gtk-mvc-adaptor.h \
+	gtk-mvc-view.c \
+	gtk-mvc-view.h \
 	gtk-scroll-controller.c \
 	gtk-scroll-controller.h \
 	gtk-scroll-model.c \

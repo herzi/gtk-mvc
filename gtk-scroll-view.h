@@ -22,6 +22,7 @@
 #define GTK_SCROLL_VIEW_H
 
 #include <gtk/gtk.h>
+#include "gtk-mvc-view.h"
 
 G_BEGIN_DECLS
 
@@ -36,8 +37,8 @@ typedef struct _GtkScrollViewPrivate GtkScrollViewPrivate;
 #define GTK_IS_SCROLL_VIEW_CLASS(c)  (G_TYPE_CHECK_CLASS_TYPE ((c), GTK_SCROLL_TYPE_VIEW))
 #define GTK_SCROLL_VIEW_GET_CLASS(i) (G_TYPE_INSTANCE_GET_CLASS ((i), GTK_SCROLL_TYPE_VIEW, GtkScrollViewClass))
 
-GType      gtk_scroll_view_get_type (void);
-GtkWidget* gtk_scroll_view_new      (void);
+GType       gtk_scroll_view_get_type (void);
+GtkMvcView* gtk_scroll_view_new      (void);
 
 struct _GtkScrollView
 {

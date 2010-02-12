@@ -22,6 +22,7 @@
 #define GTK_MVC_ADAPTOR_H
 
 #include <gtk/gtk.h>
+#include "gtk-mvc-view.h"
 
 G_BEGIN_DECLS
 
@@ -37,7 +38,7 @@ typedef struct _GtkMvcAtaptorPrivate GtkMvcAdaptorPrivate;
 #define GTK_MVC_ADAPTOR_GET_CLASS(i) (G_TYPE_INSTANCE_GET_CLASS ((i), GTK_MVC_TYPE_ADAPTOR, GtkMvcAdaptorClass))
 
 GType      gtk_mvc_adaptor_get_type (void);
-GtkWidget* gtk_mvc_adaptor_new      (void);
+GtkWidget* gtk_mvc_adaptor_new      (GtkMvcView* view);
 
 struct _GtkMvcAdaptor
 {
