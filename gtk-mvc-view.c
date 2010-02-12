@@ -1,7 +1,4 @@
-/* This file is part of ...
- *
- * AUTHORS
- *     Sven Herzberg  <set the EMAIL_ADDRESS environment variable>
+/* This file is part of herzi's playground
  *
  * Copyright (C) 2010  Sven Herzberg
  *
@@ -23,5 +20,28 @@
 
 #include "gtk-mvc-view.h"
 
+GType
+gtk_mvc_view_get_type (void)
+{
+  static GType type = 0;
+
+  if (g_once_init_enter (&type))
+    {
+      GTypeInfo  info = {
+              sizeof (GtkMvcViewIface),
+              NULL, NULL,
+              NULL, NULL, NULL,
+              0, 0, NULL,
+              NULL
+      };
+      GType registered = g_type_register_static (G_TYPE_INTERFACE,
+                                                 G_STRINGIFY (GtkMvcView),
+                                                 &info,
+                                                 0);
+      g_once_init_leave (&type, registered);
+    }
+
+  return type;
+}
 
 /* vim:set et sw=2 cino=t0,f0,(0,{s,>2s,n-1s,^-1s,e2s: */
