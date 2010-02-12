@@ -1,0 +1,6 @@
+A fully MVC based re-implementation of GtkScrollbar
+===================================================
+
+This project was inspired by Kris' talk about the MVC pattern in the Lanedo
+apres-conference after FOSDEM 2010.
+
