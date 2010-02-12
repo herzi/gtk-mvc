@@ -28,7 +28,7 @@ G_BEGIN_DECLS
 
 typedef struct _GtkMvcAdaptor        GtkMvcAdaptor;
 typedef struct _GtkMvcAdaptorClass   GtkMvcAdaptorClass;
-typedef struct _GtkMvcAtaptorPrivate GtkMvcAdaptorPrivate;
+typedef struct _GtkMvcAdaptorPrivate GtkMvcAdaptorPrivate;
 
 #define GTK_MVC_TYPE_ADAPTOR         (gtk_mvc_adaptor_get_type ())
 #define GTK_MVC_ADAPTOR(i)           (G_TYPE_CHECK_INSTANCE_CAST ((i), GTK_MVC_TYPE_ADAPTOR, GtkMvcAdaptor))
