@@ -1,3 +1,4 @@
 libscroll.so
+*.o
 scroll-demo
 test-scroll
