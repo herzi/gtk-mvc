@@ -79,6 +79,7 @@ main (int   argc,
   g_test_add_func ("/mvc-adaptor/constructor", test_adaptor_constructor);
   g_test_add_func ("/scroll/view/constructor", test_view_constructor);
   g_test_add_func ("/scroll/view/constructor-embed", test_view_constructor_embed);
+  /* FIXME: g_test_add_func ("/scroll/view/position", test_scroll_view_position); */
   g_test_add_func ("/scroll/view/paint", test_scroll_view_paint);
 
   return g_test_run ();
