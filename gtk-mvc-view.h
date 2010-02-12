@@ -22,6 +22,7 @@
 #define GTK_MVC_VIEW_H
 
 #include <glib-object.h>
+#include <cairo.h>
 
 G_BEGIN_DECLS
 
@@ -32,13 +33,19 @@ typedef struct _GtkMvcViewIface GtkMvcViewIface;
 #define GTK_MVC_VIEW(i)           (G_TYPE_CHECK_INSTANCE_CAST ((i), GTK_MVC_TYPE_VIEW, GtkMvcView))
 #define GTK_MVC_VIEW_IFACE(c)     (g_warning ("unimplemented"))
 #define GTK_MVC_IS_VIEW(i)        (G_TYPE_CHECK_INSTANCE_TYPE ((i), GTK_MVC_TYPE_VIEW))
-#define GTK_MVC_VIEW_GET_IFACE(i) (G_TYPE_INSTANCE_GET_INTERFACE ((i), GTK_MVC_TYPE_VIEW, GtkMbcViewIface))
+#define GTK_MVC_VIEW_GET_IFACE(i) (G_TYPE_INSTANCE_GET_INTERFACE ((i), GTK_MVC_TYPE_VIEW, GtkMvcViewIface))
 
-GType  gtk_mvc_view_get_type (void);
+GType  gtk_mvc_view_get_type     (void);
+void   gtk_mvc_view_set_position (GtkMvcView       * view,
+                                  cairo_rectangle_t* position);
 
 struct _GtkMvcViewIface
 {
   GTypeInterface  base_interface;
+
+  /* vtable */
+  void (*set_position) (GtkMvcView       * self,
+                        cairo_rectangle_t* rectangle);
 };
 
 G_END_DECLS

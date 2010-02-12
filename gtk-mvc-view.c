@@ -44,4 +44,27 @@ gtk_mvc_view_get_type (void)
   return type;
 }
 
+void
+gtk_mvc_view_set_position (GtkMvcView       * self,
+                           cairo_rectangle_t* position)
+{
+  GtkMvcViewIface* iface;
+
+  g_return_if_fail (GTK_MVC_IS_VIEW (self));
+  g_return_if_fail (position);
+
+  iface = GTK_MVC_VIEW_GET_IFACE (self);
+
+  if (!iface->set_position)
+    {
+      g_warning ("%s(%s): the type %s doesn't implement GtkMvcViewIface->set_position()",
+                 G_STRFUNC, G_STRLOC,
+                 G_OBJECT_TYPE_NAME (self));
+    }
+  else
+    {
+      iface->set_position (self, position);
+    }
+}
+
 /* vim:set et sw=2 cino=t0,f0,(0,{s,>2s,n-1s,^-1s,e2s: */

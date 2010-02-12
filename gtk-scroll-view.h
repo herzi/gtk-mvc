@@ -28,7 +28,7 @@ G_BEGIN_DECLS
 
 typedef struct _GtkScrollView        GtkScrollView;
 typedef struct _GtkScrollViewClass   GtkScrollViewClass;
-typedef struct _GtkScrollViewPrivate GtkScrollViewPrivate;
+typedef struct _GtkMvcScrollViewPrivate GtkMvcScrollViewPrivate;
 
 #define GTK_SCROLL_TYPE_VIEW         (gtk_scroll_view_get_type ())
 #define GTK_SCROLL_VIEW(i)           (G_TYPE_CHECK_INSTANCE_CAST ((i), GTK_SCROLL_TYPE_VIEW, GtkScrollView))
@@ -42,13 +42,13 @@ GtkMvcView* gtk_scroll_view_new      (void);
 
 struct _GtkScrollView
 {
-  GtkLabel              base_instance;
-  GtkScrollViewPrivate* _private;
+  GtkLabel                 base_instance;
+  GtkMvcScrollViewPrivate* _private;
 };
 
 struct _GtkScrollViewClass
 {
-  GtkLabelClass         base_class;
+  GtkLabelClass            base_class;
 };
 
 G_END_DECLS

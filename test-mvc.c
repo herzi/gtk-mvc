@@ -57,14 +57,13 @@ test_view_constructor_embed (void)
 static void
 test_scroll_view_paint (void)
 {
-  GdkRectangle  position = {0, 0, 150, 150};
-  GtkMvcView  * view = gtk_scroll_view_new ();
+  cairo_rectangle_t  position = {0, 0, 150, 150};
+  GtkMvcView       * view = gtk_scroll_view_new ();
   g_object_ref_sink (view);
 
+  gtk_mvc_view_set_position (view, &position);
 #if 0
-  gtk_scroll_view_set_position (view,
-                                &position);
-  gtk_scroll_view_paint (view, context, region);
+  gtk_view_paint (view, context, region);
 #endif
   /* FIXME: make sure something was drawn */
 
