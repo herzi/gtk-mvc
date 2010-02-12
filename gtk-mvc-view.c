@@ -56,11 +56,6 @@ gtk_mvc_view_paint (GtkMvcView            * self,
   g_return_if_fail (area);
   g_return_if_fail (region->status == CAIRO_STATUS_SUCCESS);
 
-  if (cairo_status (context) != CAIRO_STATUS_SUCCESS)
-    {
-      return;
-    }
-
   iface = GTK_MVC_VIEW_GET_IFACE (self);
   if (!iface->paint)
     {
@@ -68,7 +63,7 @@ gtk_mvc_view_paint (GtkMvcView            * self,
                  G_STRFUNC, G_STRLOC,
                  G_OBJECT_TYPE_NAME (self));
     }
-  else
+  else if (cairo_status (context) == CAIRO_STATUS_SUCCESS)
     {
       iface->paint (self, context, area, region);
     }

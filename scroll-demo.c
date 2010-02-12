@@ -35,7 +35,7 @@ main (int   argc,
   gtk_init (&argc, &argv);
 
   box      = gtk_hbox_new (FALSE, 0);
-  scroll   = gtk_mvc_adaptor_new (gtk_scroll_view_new ());
+  scroll   = gtk_mvc_adaptor_new (gtk_mvc_scroll_view_new ());
   window   = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   viewport = gtk_viewport_new (NULL, NULL);
 

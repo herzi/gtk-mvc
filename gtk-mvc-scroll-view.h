@@ -18,41 +18,41 @@
  * USA
  */
 
-#ifndef GTK_SCROLL_VIEW_H
-#define GTK_SCROLL_VIEW_H
+#ifndef GTK_MVC_SCROLL_VIEW_H
+#define GTK_MVC_SCROLL_VIEW_H
 
 #include <gtk/gtk.h>
 #include "gtk-mvc-view.h"
 
 G_BEGIN_DECLS
 
-typedef struct _GtkScrollView        GtkScrollView;
-typedef struct _GtkScrollViewClass   GtkScrollViewClass;
+typedef struct _GtkMvcScrollView        GtkMvcScrollView;
+typedef struct _GtkMvcScrollViewClass   GtkMvcScrollViewClass;
 typedef struct _GtkMvcScrollViewPrivate GtkMvcScrollViewPrivate;
 
-#define GTK_SCROLL_TYPE_VIEW         (gtk_scroll_view_get_type ())
-#define GTK_SCROLL_VIEW(i)           (G_TYPE_CHECK_INSTANCE_CAST ((i), GTK_SCROLL_TYPE_VIEW, GtkScrollView))
-#define GTK_SCROLL_VIEW_CLASS(c)     (G_TYPE_CHECK_CLASS_CAST ((c), GTK_SCROLL_TYPE_VIEW, GtkScrollViewClass))
-#define GTK_IS_SCROLL_VIEW(i)        (G_TYPE_CHECK_INSTANCE_TYPE ((i), GTK_SCROLL_TYPE_VIEW))
-#define GTK_IS_SCROLL_VIEW_CLASS(c)  (G_TYPE_CHECK_CLASS_TYPE ((c), GTK_SCROLL_TYPE_VIEW))
-#define GTK_SCROLL_VIEW_GET_CLASS(i) (G_TYPE_INSTANCE_GET_CLASS ((i), GTK_SCROLL_TYPE_VIEW, GtkScrollViewClass))
+#define GTK_MVC_TYPE_SCROLL_VIEW         (gtk_scroll_view_get_type ())
+#define GTK_MVC_SCROLL_VIEW(i)           (G_TYPE_CHECK_INSTANCE_CAST ((i), GTK_SCROLL_TYPE_VIEW, GtkScrollView))
+#define GTK_MVC_SCROLL_VIEW_CLASS(c)     (G_TYPE_CHECK_CLASS_CAST ((c), GTK_SCROLL_TYPE_VIEW, GtkScrollViewClass))
+#define GTK_MVC_IS_SCROLL_VIEW(i)        (G_TYPE_CHECK_INSTANCE_TYPE ((i), GTK_SCROLL_TYPE_VIEW))
+#define GTK_MVC_IS_SCROLL_VIEW_CLASS(c)  (G_TYPE_CHECK_CLASS_TYPE ((c), GTK_SCROLL_TYPE_VIEW))
+#define GTK_MVC_SCROLL_VIEW_GET_CLASS(i) (G_TYPE_INSTANCE_GET_CLASS ((i), GTK_SCROLL_TYPE_VIEW, GtkScrollViewClass))
 
-GType       gtk_scroll_view_get_type (void);
-GtkMvcView* gtk_scroll_view_new      (void);
+GType       gtk_mvc_scroll_view_get_type (void);
+GtkMvcView* gtk_mvc_scroll_view_new      (void);
 
-struct _GtkScrollView
+struct _GtkMvcScrollView
 {
   GtkLabel                 base_instance;
   GtkMvcScrollViewPrivate* _private;
 };
 
-struct _GtkScrollViewClass
+struct _GtkMvcScrollViewClass
 {
   GtkLabelClass            base_class;
 };
 
 G_END_DECLS
 
-#endif /* !GTK_SCROLL_VIEW_H */
+#endif /* !GTK_MVC_SCROLL_VIEW_H */
 
 /* vim:set et sw=2 cino=t0,f0,(0,{s,>2s,n-1s,^-1s,e2s: */

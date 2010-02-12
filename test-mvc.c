@@ -37,10 +37,10 @@ test_adaptor_constructor (void)
 static void
 test_view_constructor (void)
 {
-  gpointer view = gtk_scroll_view_new ();
+  GtkMvcView* view = gtk_mvc_scroll_view_new ();
   g_object_ref_sink (view);
 
-  g_assert_cmpstr (G_OBJECT_TYPE_NAME (view), ==, "GtkScrollView");
+  g_assert_cmpstr (G_OBJECT_TYPE_NAME (view), ==, "GtkMvcScrollView");
 
   g_object_unref (view);
 }
@@ -48,7 +48,7 @@ test_view_constructor (void)
 static void
 test_view_constructor_embed (void)
 {
-  GtkWidget* widget = gtk_mvc_adaptor_new (gtk_scroll_view_new ());
+  GtkWidget* widget = gtk_mvc_adaptor_new (gtk_mvc_scroll_view_new ());
   g_object_ref_sink (widget);
 
   g_object_unref (widget);
@@ -63,7 +63,7 @@ test_scroll_view_paint (void)
           &position,
           1
   };
-  GtkMvcView            * view = gtk_scroll_view_new ();
+  GtkMvcView            * view = gtk_mvc_scroll_view_new ();
   cairo_t               * context;
   g_object_ref_sink (view);
 

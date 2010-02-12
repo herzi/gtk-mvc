@@ -14,14 +14,14 @@ libscroll_so_sources=\
 	gtk-mvc.h \
 	gtk-mvc-adaptor.c \
 	gtk-mvc-adaptor.h \
+	gtk-mvc-scroll-view.c \
+	gtk-mvc-scroll-view.h \
 	gtk-mvc-view.c \
 	gtk-mvc-view.h \
 	gtk-scroll-controller.c \
 	gtk-scroll-controller.h \
 	gtk-scroll-model.c \
 	gtk-scroll-model.h \
-	gtk-scroll-view.c \
-	gtk-scroll-view.h \
 	$(NULL)
 libscroll_so_objects=$(patsubst %.c,%.o,$(filter %.c,$(libscroll_so_sources)))
 
