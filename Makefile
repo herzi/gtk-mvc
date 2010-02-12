@@ -11,6 +11,8 @@ clean:
 	rm -rf *.o libscoll.so scroll-demo test-scroll
 
 libscroll_so_sources=\
+	gtk-mvc-adaptor.c \
+	gtk-mvc-adaptor.h \
 	gtk-scroll-controller.c \
 	gtk-scroll-controller.h \
 	gtk-scroll-model.c \
