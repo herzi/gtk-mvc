@@ -20,10 +20,22 @@
 
 #include "gtk-scroll-view.h"
 
+G_DEFINE_TYPE (GtkScrollView, gtk_scroll_view, GTK_TYPE_LABEL);
+
+static void
+gtk_scroll_view_init (GtkScrollView* self)
+{}
+
+static void
+gtk_scroll_view_class_init (GtkScrollViewClass* self_class)
+{}
+
 GtkWidget*
 gtk_scroll_view_new (void)
 {
-  return gtk_label_new ("GtkScrollView");
+  return g_object_new (GTK_SCROLL_TYPE_VIEW,
+                       "label", "GtkScrollView",
+                       NULL);
 }
 
 /* vim:set et sw=2 cino=t0,f0,(0,{s,>2s,n-1s,^-1s,e2s: */

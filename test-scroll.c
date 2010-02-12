@@ -27,6 +27,9 @@ test_view_constructor (void)
 {
   GtkWidget* widget = gtk_scroll_view_new ();
   g_object_ref_sink (widget);
+
+  g_assert_cmpstr (G_OBJECT_TYPE_NAME (widget), ==, "GtkScrollView");
+
   g_object_unref (widget);
 }
 

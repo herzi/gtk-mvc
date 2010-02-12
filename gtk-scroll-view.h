@@ -25,7 +25,30 @@
 
 G_BEGIN_DECLS
 
-GtkWidget* gtk_scroll_view_new (void);
+typedef struct _GtkScrollView        GtkScrollView;
+typedef struct _GtkScrollViewClass   GtkScrollViewClass;
+typedef struct _GtkScrollViewPrivate GtkScrollViewPrivate;
+
+#define GTK_SCROLL_TYPE_VIEW         (gtk_scroll_view_get_type ())
+#define GTK_SCROLL_VIEW(i)           (G_TYPE_CHECK_INSTANCE_CAST ((i), GTK_SCROLL_TYPE_VIEW, GtkScrollView))
+#define GTK_SCROLL_VIEW_CLASS(c)     (G_TYPE_CHECK_CLASS_CAST ((c), GTK_SCROLL_TYPE_VIEW, GtkScrollViewClass))
+#define GTK_IS_SCROLL_VIEW(i)        (G_TYPE_CHECK_INSTANCE_TYPE ((i), GTK_SCROLL_TYPE_VIEW))
+#define GTK_IS_SCROLL_VIEW_CLASS(c)  (G_TYPE_CHECK_CLASS_TYPE ((c), GTK_SCROLL_TYPE_VIEW))
+#define GTK_SCROLL_VIEW_GET_CLASS(i) (G_TYPE_INSTANCE_GET_CLASS ((i), GTK_SCROLL_TYPE_VIEW, GtkScrollViewClass))
+
+GType      gtk_scroll_view_get_type (void);
+GtkWidget* gtk_scroll_view_new      (void);
+
+struct _GtkScrollView
+{
+  GtkLabel              base_instance;
+  GtkScrollViewPrivate* _private;
+};
+
+struct _GtkScrollViewClass
+{
+  GtkLabelClass         base_class;
+};
 
 G_END_DECLS
 
