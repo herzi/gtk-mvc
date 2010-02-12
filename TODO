@@ -1,1 +1,7 @@
+* GtkMvcAdaptor
+  - test proper forwarding of the expose event
 * GtkMvcWidgetContainer
+* GtkMvcView
+  - HxW => via interface
+  - WxH => via interface
+  - baseline support => via interface
