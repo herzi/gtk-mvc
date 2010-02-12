@@ -25,7 +25,30 @@
 
 G_BEGIN_DECLS
 
-GtkWidget* gtk_mvc_adaptor_new (void);
+typedef struct _GtkMvcAdaptor        GtkMvcAdaptor;
+typedef struct _GtkMvcAdaptorClass   GtkMvcAdaptorClass;
+typedef struct _GtkMvcAtaptorPrivate GtkMvcAdaptorPrivate;
+
+#define GTK_MVC_TYPE_ADAPTOR         (gtk_mvc_adaptor_get_type ())
+#define GTK_MVC_ADAPTOR(i)           (G_TYPE_CHECK_INSTANCE_CAST ((i), GTK_MVC_TYPE_ADAPTOR, GtkMvcAdaptor))
+#define GTK_MVC_ADAPTOR_CLASS(c)     (G_TYPE_CHECK_CLASS_CAST ((c), GTK_MVC_TYPE_ADAPTOR, GtkMvcAdaptorClass))
+#define GTK_MVC_IS_ADAPTOR(i)        (G_TYPE_CHECK_INSTANCE_TYPE ((i), GTK_MVC_TYPE_ADAPTOR))
+#define GTK_MVC_IS_ADAPTOR_CLASS(c)  (G_TYPE_CHECK_CLASS_TYPE ((c), GTK_MVC_TYPE_ADAPTOR))
+#define GTK_MVC_ADAPTOR_GET_CLASS(i) (G_TYPE_INSTANCE_GET_CLASS ((i), GTK_MVC_TYPE_ADAPTOR, GtkMvcAdaptorClass))
+
+GType      gtk_mvc_adaptor_get_type (void);
+GtkWidget* gtk_mvc_adaptor_new      (void);
+
+struct _GtkMvcAdaptor
+{
+  GtkLabel              base_instance;
+  GtkMvcAdaptorPrivate* _private;
+};
+
+struct _GtkMvcAdaptorClass
+{
+  GtkLabelClass         base_class;
+};
 
 G_END_DECLS
 

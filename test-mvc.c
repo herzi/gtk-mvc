@@ -29,6 +29,8 @@ test_adaptor_constructor (void)
   g_assert (widget);
   g_object_ref_sink (widget);
 
+  g_assert_cmpstr (G_OBJECT_TYPE_NAME (widget), ==, "GtkMvcAdaptor");
+
   g_object_unref (widget);
 }
 

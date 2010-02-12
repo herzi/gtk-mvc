@@ -20,10 +20,20 @@
 
 #include "gtk-mvc-adaptor.h"
 
+G_DEFINE_TYPE (GtkMvcAdaptor, gtk_mvc_adaptor, GTK_TYPE_LABEL);
+
+static void
+gtk_mvc_adaptor_init (GtkMvcAdaptor* self)
+{}
+
+static void
+gtk_mvc_adaptor_class_init (GtkMvcAdaptorClass* self_class)
+{}
+
 GtkWidget*
 gtk_mvc_adaptor_new (void)
 {
-  return g_object_new (GTK_TYPE_LABEL,
+  return g_object_new (GTK_MVC_TYPE_ADAPTOR,
                        "label", "GtkMvcAdaptor",
                        NULL);
 }
