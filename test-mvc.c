@@ -20,7 +20,7 @@
  * if advised of the possibility of such damage.
  */
 
-#include "gtk-scroll-view.h"
+#include "gtk-mvc.h"
 
 static void
 test_view_constructor (void)
