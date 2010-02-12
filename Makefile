@@ -1,7 +1,10 @@
-all: scroll-demo
+all: scroll-demo test-scroll
 
-scroll-demo: scroll-demo.c libscroll.so
-	gcc -o $@ $< -L. -lscroll
+check: test-scroll
+	./test-scroll
+
+clean:
+	rm -rf scroll-demo libscoll.so test-scroll
 
 libscroll.so: \
 	gtk-scroll-controller.c \
@@ -12,8 +15,9 @@ libscroll.so: \
 	gtk-scroll-view.h
 	gcc -shared -o $@ $(filter %.c,$^)
 
-check:
+scroll-demo: scroll-demo.c libscroll.so
+	gcc -o $@ $< -L. -lscroll -Wl,"-rpath=$(shell pwd)"
 
-clean:
-
+test-scroll: test-scroll.c libscroll.so
+	gcc -o $@ $< -L. -lscroll -Wl,"-rpath=$(shell pwd)"
 
