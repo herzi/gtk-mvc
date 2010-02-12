@@ -1,7 +1,4 @@
-/* This file is part of ...
- *
- * AUTHORS
- *     Sven Herzberg  <set the EMAIL_ADDRESS environment variable>
+/* This file is part of herzi's playground
  *
  * Copyright (C) 2010  Sven Herzberg
  *
@@ -24,6 +21,13 @@
 #ifndef GTK_MVC_ADAPTOR_H
 #define GTK_MVC_ADAPTOR_H
 
+#include <gtk/gtk.h>
+
+G_BEGIN_DECLS
+
+GtkWidget* gtk_mvc_adaptor_new (void);
+
+G_END_DECLS
 
 #endif /* !GTK_MVC_ADAPTOR_H */
 

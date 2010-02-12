@@ -1,7 +1,4 @@
-/* This file is part of ...
- *
- * AUTHORS
- *     Sven Herzberg  <set the EMAIL_ADDRESS environment variable>
+/* This file is part of herzi's playground
  *
  * Copyright (C) 2010  Sven Herzberg
  *
@@ -23,5 +20,10 @@
 
 #include "gtk-mvc-adaptor.h"
 
+GtkWidget*
+gtk_mvc_adaptor_new (void)
+{
+  return NULL;
+}
 
 /* vim:set et sw=2 cino=t0,f0,(0,{s,>2s,n-1s,^-1s,e2s: */

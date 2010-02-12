@@ -23,6 +23,15 @@
 #include "gtk-mvc.h"
 
 static void
+test_adaptor_constructor (void)
+{
+  GtkWidget* widget = gtk_mvc_adaptor_new ();
+  g_object_ref_sink (widget);
+
+  g_object_unref (widget);
+}
+
+static void
 test_view_constructor (void)
 {
   GtkWidget* widget = gtk_scroll_view_new ();
@@ -39,6 +48,7 @@ main (int   argc,
 {
   gtk_test_init (&argc, &argv, NULL);
 
+  g_test_add_func ("/mvc-adaptor/constructor", test_adaptor_constructor);
   g_test_add_func ("/scroll/view/constructor", test_view_constructor);
 
   return g_test_run ();
