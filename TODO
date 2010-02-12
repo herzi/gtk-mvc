@@ -1,5 +1,7 @@
 * GtkMvcAdaptor
   - test proper forwarding of the expose event
+  - test proper forwarding of the size-request event
+  - test proper forwarding of the size-allocate event
 * GtkMvcWidgetContainer
 * GtkMvcView
   - HxW => via interface

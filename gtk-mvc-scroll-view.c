@@ -57,6 +57,15 @@ paint (GtkMvcView            * view,
 }
 
 static void
+query_size (GtkMvcView    * view,
+            gtk_mvc_size_t* size)
+{
+  /* FIXME: add realize() equivalent */
+  size->width = 100;
+  size->height = 15;
+}
+
+static void
 set_position (GtkMvcView       * view,
               cairo_rectangle_t* position)
 {
@@ -67,6 +76,7 @@ static void
 implement_gtk_mvc_view (GtkMvcViewIface* iface)
 {
   iface->paint        = paint;
+  iface->query_size   = query_size;
   iface->set_position = set_position;
 }
 

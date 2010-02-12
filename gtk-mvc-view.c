@@ -70,6 +70,28 @@ gtk_mvc_view_paint (GtkMvcView            * self,
 }
 
 void
+gtk_mvc_view_query_size (GtkMvcView    * self,
+                         gtk_mvc_size_t* size)
+{
+  GtkMvcViewIface* iface;
+
+  g_return_if_fail (GTK_MVC_IS_VIEW (self));
+  g_return_if_fail (size);
+
+  iface = GTK_MVC_VIEW_GET_IFACE (self);
+  if (!iface->query_size)
+    {
+      g_warning ("%s(%s): the type %s doesn't implement GtkMvcViewIface->query_size()",
+                 G_STRFUNC, G_STRLOC,
+                 G_OBJECT_TYPE_NAME (self));
+    }
+  else
+    {
+      iface->query_size (self, size);
+    }
+}
+
+void
 gtk_mvc_view_set_position (GtkMvcView       * self,
                            cairo_rectangle_t* position)
 {

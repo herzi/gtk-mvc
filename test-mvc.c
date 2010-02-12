@@ -55,6 +55,20 @@ test_view_constructor_embed (void)
 }
 
 static void
+test_scroll_view_query_size (void)
+{
+  gtk_mvc_size_t  size = {0.0, 0.0};
+  GtkMvcView    * view = gtk_mvc_scroll_view_new ();
+  g_object_ref_sink (view);
+
+  gtk_mvc_view_query_size (view, &size);
+  g_assert_cmpfloat (size.width, >, 0.0);
+  g_assert_cmpfloat (size.height, >, 0.0);
+
+  g_object_unref (view);
+}
+
+static void
 test_scroll_view_paint (void)
 {
   cairo_rectangle_t       position = {0, 0, 150, 150};
@@ -83,6 +97,7 @@ main (int   argc,
   g_test_add_func ("/mvc-adaptor/constructor", test_adaptor_constructor);
   g_test_add_func ("/scroll/view/constructor", test_view_constructor);
   g_test_add_func ("/scroll/view/constructor-embed", test_view_constructor_embed);
+  g_test_add_func ("/scroll/view/query-size", test_scroll_view_query_size);
   /* FIXME: g_test_add_func ("/scroll/view/position", test_scroll_view_position); */
   g_test_add_func ("/scroll/view/paint", test_scroll_view_paint);
 
