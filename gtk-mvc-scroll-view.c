@@ -45,11 +45,21 @@ gtk_scroll_view_class_init (GtkMvcScrollViewClass* self_class)
 }
 
 static void
+get_position (GtkMvcView       * view,
+              cairo_rectangle_t* position)
+{
+  *position = PRIV (view)->position;
+}
+
+static void
 paint (GtkMvcView            * view,
        cairo_t               * cr,
        cairo_rectangle_t     * area,
        cairo_rectangle_list_t* region)
 {
+  cairo_rectangle_t  position = {0.0, 0.0, 0.0, 0.0};
+  gtk_mvc_view_get_position (view, &position);
+
   cairo_save (cr);
 
   cairo_set_line_width (cr, 1.0);
@@ -57,8 +67,8 @@ paint (GtkMvcView            * view,
   /* draw full area */
   cairo_rectangle (cr,
                    0.0, 0.0,
-                   PRIV (view)->position.width,
-                   PRIV (view)->position.height);
+                   position.width,
+                   position.height);
   cairo_set_source_rgb (cr,
                         1.0 / 0xff * 0x4e,
                         1.0 / 0xff * 0x9a,
@@ -68,7 +78,7 @@ paint (GtkMvcView            * view,
   /* draw top button */
   cairo_rectangle (cr,
                    0.5, 0.5,
-                   PRIV (view)->position.width - 1.0, PRIV (view)->position.width - 1.0);
+                   position.width - 1.0, position.width - 1.0);
   cairo_set_source_rgb (cr,
                         1.0 / 0xff * 0x20,
                         1.0 / 0xff * 0x4a,
@@ -82,9 +92,9 @@ paint (GtkMvcView            * view,
 
   /* draw indicator */
   cairo_rectangle (cr,
-                   0.5, PRIV (view)->position.width + 0.5,
-                   PRIV (view)->position.width - 1.0,
-                   PRIV (view)->position.height - 2 * PRIV (view)->position.width - 1.0);
+                   0.5, position.width + 0.5,
+                   position.width - 1.0,
+                   position.height - 2 * position.width - 1.0);
   cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.25);
   cairo_fill_preserve (cr);
   cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.75);
@@ -93,8 +103,8 @@ paint (GtkMvcView            * view,
   /* draw bottom button */
   cairo_rectangle (cr,
                    0.5,
-                   PRIV (view)->position.height - PRIV (view)->position.width + 0.5,
-                   PRIV (view)->position.width - 1.0, PRIV (view)->position.width - 1.0);
+                   position.height - position.width + 0.5,
+                   position.width - 1.0, position.width - 1.0);
   cairo_set_source_rgb (cr,
                         1.0 / 0xff * 0x20,
                         1.0 / 0xff * 0x4a,
@@ -128,6 +138,7 @@ set_position (GtkMvcView       * view,
 static void
 implement_gtk_mvc_view (GtkMvcViewIface* iface)
 {
+  iface->get_position = get_position;
   iface->paint        = paint;
   iface->query_size   = query_size;
   iface->set_position = set_position;

@@ -37,13 +37,15 @@ typedef struct _GtkMvcViewIface GtkMvcViewIface;
 #define GTK_MVC_VIEW_GET_IFACE(i) (G_TYPE_INSTANCE_GET_INTERFACE ((i), GTK_MVC_TYPE_VIEW, GtkMvcViewIface))
 
 GType  gtk_mvc_view_get_type     (void);
-void   gtk_mvc_view_paint        (GtkMvcView            * view,
+void   gtk_mvc_view_get_position (GtkMvcView            * self,
+                                  cairo_rectangle_t     * position);
+void   gtk_mvc_view_paint        (GtkMvcView            * self,
                                   cairo_t               * context,
                                   cairo_rectangle_t     * area,
                                   cairo_rectangle_list_t* region);
 void   gtk_mvc_view_query_size   (GtkMvcView            * self,
                                   gtk_mvc_size_t        * size);
-void   gtk_mvc_view_set_position (GtkMvcView            * view,
+void   gtk_mvc_view_set_position (GtkMvcView            * self,
                                   cairo_rectangle_t     * position);
 
 struct _GtkMvcViewIface
@@ -51,11 +53,13 @@ struct _GtkMvcViewIface
   GTypeInterface  base_interface;
 
   /* vtable */
-  void (*paint)        (GtkMvcView            * view,
+  void (*get_position) (GtkMvcView            * self,
+                        cairo_rectangle_t     * position);
+  void (*paint)        (GtkMvcView            * self,
                         cairo_t               * context,
                         cairo_rectangle_t     * area,
                         cairo_rectangle_list_t* region);
-  void (*query_size)   (GtkMvcView            * view,
+  void (*query_size)   (GtkMvcView            * self,
                         gtk_mvc_size_t        * size);
   void (*set_position) (GtkMvcView            * self,
                         cairo_rectangle_t     * rectangle);
