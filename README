@@ -4,3 +4,18 @@ A fully MVC based re-implementation of GtkScrollbar
 This project was inspired by Kris' talk about the MVC pattern in the Lanedo
 apres-conference after FOSDEM 2010.
 
+
+Class Overview:
+
+ + GObject
+   + GInitiallyUnowned
+     + GtkObject
+     | + GtkWidget
+     |   + GtkMvcAdaptor: a GtkWidget that embeds a GtkMvcView/GtkMvcController
+     |     into a GtkContainer (so we have a proper migration path)
+     + GtkMvcScrollView: the view for the scrollbar implementation
+     + GtkMvcScrollController: the controller for the scrollbar implementation
+     + GtkMvcScrollModel: the model for the scrollbar implementation
+ + GTypeInterface
+   + GtkMvcView: the interface resembling the views
+
