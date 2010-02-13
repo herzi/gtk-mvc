@@ -39,6 +39,23 @@ paint (GtkMvcView            * view,
        cairo_rectangle_t     * area,
        cairo_rectangle_list_t* region)
 {
+  cairo_rectangle_t  position;
+
+  gtk_mvc_view_get_position (view, &position);
+  cairo_set_line_width (context, 1.0);
+  cairo_rectangle (context,
+                   0.5, 0.5,
+                   position.width - 1.0, position.height - 1.0);
+  cairo_set_source_rgb (context,
+                        1.0 / 0xff * 0x20,
+                        1.0 / 0xff * 0x4a,
+                        1.0 / 0xff * 0x87);
+  cairo_fill_preserve (context);
+  cairo_set_source_rgb (context,
+                        1.0 / 0xff * 0x72,
+                        1.0 / 0xff * 0x9f,
+                        1.0 / 0xff * 0xcf);
+  cairo_stroke (context);
 }
 
 static void

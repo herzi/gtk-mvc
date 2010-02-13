@@ -32,6 +32,8 @@ struct _GtkMvcScrollViewPrivate
 
 static void implement_gtk_mvc_view (GtkMvcViewIface* iface);
 
+static GtkMvcViewIface* gtk_mvc_scroll_view_parent_view_iface = NULL;
+
 G_DEFINE_TYPE_WITH_CODE (GtkMvcScrollView, gtk_scroll_view, GTK_MVC_TYPE_DEFAULT_VIEW,
                          G_IMPLEMENT_INTERFACE (GTK_MVC_TYPE_VIEW, implement_gtk_mvc_view));
 
@@ -48,6 +50,23 @@ static void
 gtk_scroll_view_class_init (GtkMvcScrollViewClass* self_class)
 {
   g_type_class_add_private (self_class, sizeof (GtkMvcScrollViewPrivate));
+}
+
+static void
+set_position (GtkMvcView       * view,
+              cairo_rectangle_t* position)
+{
+  cairo_rectangle_t  child_position = {0.0, 0.0, 0.0, 0.0};
+
+  gtk_mvc_scroll_view_parent_view_iface->set_position (view, position);
+
+  child_position.x = position->x;
+  child_position.y = position->y;
+  child_position.width = position->width;
+  child_position.height = position->width;
+
+  gtk_mvc_view_set_position (PRIV (view)->button_up, &child_position);
+  /* FIXME: allocate the second buttoFIXME: allocate the second buttonn */
 }
 
 static void
@@ -75,20 +94,6 @@ paint (GtkMvcView            * view,
   cairo_fill (cr);
 
   gtk_mvc_view_paint (PRIV (view)->button_up, cr, area, region);
-  /* draw top button */
-  cairo_rectangle (cr,
-                   0.5, 0.5,
-                   position.width - 1.0, position.width - 1.0);
-  cairo_set_source_rgb (cr,
-                        1.0 / 0xff * 0x20,
-                        1.0 / 0xff * 0x4a,
-                        1.0 / 0xff * 0x87);
-  cairo_fill_preserve (cr);
-  cairo_set_source_rgb (cr,
-                        1.0 / 0xff * 0x72,
-                        1.0 / 0xff * 0x9f,
-                        1.0 / 0xff * 0xcf);
-  cairo_stroke (cr);
 
   /* draw indicator */
   cairo_rectangle (cr,
@@ -132,6 +137,9 @@ query_size (GtkMvcView    * view,
 static void
 implement_gtk_mvc_view (GtkMvcViewIface* iface)
 {
+  gtk_mvc_scroll_view_parent_view_iface = g_type_interface_peek_parent (iface);
+
+  iface->set_position = set_position;
   iface->paint        = paint;
   iface->query_size   = query_size;
 }

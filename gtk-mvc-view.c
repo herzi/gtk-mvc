@@ -87,7 +87,9 @@ gtk_mvc_view_paint (GtkMvcView            * self,
     }
   else if (cairo_status (context) == CAIRO_STATUS_SUCCESS)
     {
+      cairo_save (context);
       iface->paint (self, context, area, region);
+      cairo_restore (context);
     }
 }
 
