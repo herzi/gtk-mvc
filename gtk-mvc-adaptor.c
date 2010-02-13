@@ -84,6 +84,21 @@ set_property (GObject     * object,
     }
 }
 
+static void
+size_request (GtkWidget     * widget,
+              GtkRequisition* request)
+{
+  if (PRIV (widget)->view)
+    {
+      gtk_mvc_size_t  size = {0.0, 0.0};
+
+      gtk_mvc_view_query_size (PRIV (widget)->view, &size);
+
+      request->width = size.width;
+      request->height = size.height;
+    }
+}
+
 static gboolean
 expose_event (GtkWidget     * widget,
               GdkEventExpose* event)
@@ -146,6 +161,7 @@ gtk_mvc_adaptor_class_init (GtkMvcAdaptorClass* self_class)
                                                         G_TYPE_OBJECT,
                                                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
+  widget_class->size_request = size_request;
   widget_class->expose_event = expose_event;
 
   g_type_class_add_private (self_class, sizeof (GtkMvcAdaptorPrivate));
