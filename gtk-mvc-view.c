@@ -87,7 +87,11 @@ gtk_mvc_view_paint (GtkMvcView            * self,
     }
   else if (cairo_status (context) == CAIRO_STATUS_SUCCESS)
     {
+      cairo_rectangle_t  position;
+      gtk_mvc_view_get_position (self, &position);
+
       cairo_save (context);
+      cairo_translate (context, position.x, position.y);
       iface->paint (self, context, area, region);
       cairo_restore (context);
     }

@@ -146,7 +146,6 @@ expose_event (GtkWidget     * widget,
         }
       g_free (rectangles);
 
-      cairo_translate (context, widget->allocation.x, widget->allocation.y);
       cairo_save (context);
 
       gtk_mvc_view_paint (PRIV (widget)->view, context,
