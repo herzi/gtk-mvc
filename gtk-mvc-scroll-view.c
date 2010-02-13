@@ -20,12 +20,13 @@
 
 #include "gtk-mvc-scroll-view.h"
 
-#if 0
+#include "gtk-mvc.h"
+
 struct _GtkMvcScrollViewPrivate
 {
-  cairo_rectangle_t  position;
+  GtkMvcView* button_up;
+  GtkMvcView* button_down;
 };
-#endif
 
 #define PRIV(i) (((GtkMvcScrollView*)(i))->_private)
 
@@ -37,17 +38,16 @@ G_DEFINE_TYPE_WITH_CODE (GtkMvcScrollView, gtk_scroll_view, GTK_MVC_TYPE_DEFAULT
 static void
 gtk_scroll_view_init (GtkMvcScrollView* self)
 {
-#if 0
   PRIV (self) = G_TYPE_INSTANCE_GET_PRIVATE (self, GTK_MVC_TYPE_SCROLL_VIEW, GtkMvcScrollViewPrivate);
-#endif
+
+  PRIV (self)->button_up = gtk_mvc_button_view_new ();
+  PRIV (self)->button_down = gtk_mvc_button_view_new ();
 }
 
 static void
 gtk_scroll_view_class_init (GtkMvcScrollViewClass* self_class)
 {
-#if 0
   g_type_class_add_private (self_class, sizeof (GtkMvcScrollViewPrivate));
-#endif
 }
 
 static void
@@ -74,6 +74,7 @@ paint (GtkMvcView            * view,
                         1.0 / 0xff * 0x06);
   cairo_fill (cr);
 
+  gtk_mvc_view_paint (PRIV (view)->button_up, cr, area, region);
   /* draw top button */
   cairo_rectangle (cr,
                    0.5, 0.5,
@@ -99,6 +100,7 @@ paint (GtkMvcView            * view,
   cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.75);
   cairo_stroke (cr);
 
+  gtk_mvc_view_paint (PRIV (view)->button_down, cr, area, region);
   /* draw bottom button */
   cairo_rectangle (cr,
                    0.5,

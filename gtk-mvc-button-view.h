@@ -21,6 +21,36 @@
 #ifndef GTK_MVC_BUTTON_VIEW_H
 #define GTK_MVC_BUTTON_VIEW_H
 
+#include "gtk-mvc-default-view.h"
+
+G_BEGIN_DECLS
+
+typedef struct _GtkMvcButtonView        GtkMvcButtonView;
+typedef struct _GtkMvcButtonViewClass   GtkMvcButtonViewClass;
+typedef struct _GtkMvcButtonViewPrivate GtkMvcButtonViewPrivate;
+
+#define GTK_MVC_TYPE_BUTTON_VIEW         (gtk_mvc_button_view_get_type ())
+#define GTK_MVC_BUTTON_VIEW(i)           (G_TYPE_CHECK_INSTANCE_CAST ((i), GTK_MVC_TYPE_BUTTON_VIEW, GtkMvcButtonView))
+#define GTK_MVC_BUTTON_VIEW_CLASS(c)     (G_TYPE_CHECK_CLASS_CAST ((c), GTK_MVC_TYPE_BUTTON_VIEW, GtkMvcButtonViewClass))
+#define GTK_MVC_IS_BUTTON_VIEW(i)        (G_TYPE_CHECK_INSTANCE_TYPE ((i), GTK_MVC_TYPE_BUTTON_VIEW))
+#define GTK_MVC_IS_BUTTON_VIEW_CLASS(c)  (G_TYPE_CHECK_CLASS_TYPE ((c), GTK_MVC_TYPE_BUTTON_VIEW))
+#define GTK_MVC_BUTTON_VIEW_GET_CLASS(i) (G_TYPE_INSTANCE_GET_CLASS ((i), GTK_MVC_TYPE_BUTTON_VIEW, GtkMvcButtonViewClass))
+
+GType       gtk_mvc_button_view_get_type (void);
+GtkMvcView* gtk_mvc_button_view_new      (void);
+
+struct _GtkMvcButtonView
+{
+  GtkMvcDefaultView        base_instance;
+  GtkMvcButtonViewPrivate* _private;
+};
+
+struct _GtkMvcButtonViewClass
+{
+  GtkMvcDefaultViewClass   base_class;
+};
+
+G_END_DECLS
 
 #endif /* !GTK_MVC_BUTTON_VIEW_H */
 

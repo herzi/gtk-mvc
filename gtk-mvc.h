@@ -22,6 +22,7 @@
 #define GTK_MVC_H
 
 #include "gtk-mvc-adaptor.h"
+#include "gtk-mvc-button-view.h"
 #include "gtk-mvc-scroll-view.h"
 
 #endif /* !GTK_MVC_H */
