@@ -60,13 +60,15 @@ set_position (GtkMvcView       * view,
 
   gtk_mvc_scroll_view_parent_view_iface->set_position (view, position);
 
-  child_position.x = position->x;
-  child_position.y = position->y;
+  child_position.x = 0.0;
+  child_position.y = 0.0;
   child_position.width = position->width;
   child_position.height = position->width;
 
   gtk_mvc_view_set_position (PRIV (view)->button_up, &child_position);
-  /* FIXME: allocate the second buttoFIXME: allocate the second buttonn */
+
+  child_position.y = position->height - position->width;
+  gtk_mvc_view_set_position (PRIV (view)->button_down, &child_position);
 }
 
 static void
@@ -106,22 +108,6 @@ paint (GtkMvcView            * view,
   cairo_stroke (cr);
 
   gtk_mvc_view_paint (PRIV (view)->button_down, cr, area, region);
-  /* draw bottom button */
-  cairo_rectangle (cr,
-                   0.5,
-                   position.height - position.width + 0.5,
-                   position.width - 1.0, position.width - 1.0);
-  cairo_set_source_rgb (cr,
-                        1.0 / 0xff * 0x20,
-                        1.0 / 0xff * 0x4a,
-                        1.0 / 0xff * 0x87);
-  cairo_fill_preserve (cr);
-  cairo_set_source_rgb (cr,
-                        1.0 / 0xff * 0x72,
-                        1.0 / 0xff * 0x9f,
-                        1.0 / 0xff * 0xcf);
-  cairo_stroke (cr);
-
   cairo_restore (cr);
 }
 
