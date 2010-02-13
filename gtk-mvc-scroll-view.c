@@ -29,7 +29,7 @@ struct _GtkMvcScrollViewPrivate
 
 static void implement_gtk_mvc_view (GtkMvcViewIface* iface);
 
-G_DEFINE_TYPE_WITH_CODE (GtkMvcScrollView, gtk_scroll_view, G_TYPE_INITIALLY_UNOWNED,
+G_DEFINE_TYPE_WITH_CODE (GtkMvcScrollView, gtk_scroll_view, GTK_MVC_TYPE_DEFAULT_VIEW,
                          G_IMPLEMENT_INTERFACE (GTK_MVC_TYPE_VIEW, implement_gtk_mvc_view));
 
 static void

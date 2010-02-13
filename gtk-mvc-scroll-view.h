@@ -22,7 +22,7 @@
 #define GTK_MVC_SCROLL_VIEW_H
 
 #include <gtk/gtk.h>
-#include "gtk-mvc-view.h"
+#include "gtk-mvc-default-view.h"
 
 G_BEGIN_DECLS
 
@@ -42,13 +42,13 @@ GtkMvcView* gtk_mvc_scroll_view_new      (void);
 
 struct _GtkMvcScrollView
 {
-  GInitiallyUnowned        base_instance;
+  GtkMvcDefaultView        base_instance;
   GtkMvcScrollViewPrivate* _private;
 };
 
 struct _GtkMvcScrollViewClass
 {
-  GInitiallyUnownedClass   base_class;
+  GtkMvcDefaultViewClass   base_class;
 };
 
 G_END_DECLS
