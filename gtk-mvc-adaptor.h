@@ -42,13 +42,13 @@ GtkWidget* gtk_mvc_adaptor_new      (GtkMvcView* view);
 
 struct _GtkMvcAdaptor
 {
-  GtkLabel              base_instance;
+  GtkWidget             base_instance;
   GtkMvcAdaptorPrivate* _private;
 };
 
 struct _GtkMvcAdaptorClass
 {
-  GtkLabelClass         base_class;
+  GtkWidgetClass        base_class;
 };
 
 G_END_DECLS

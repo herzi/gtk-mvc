@@ -33,12 +33,14 @@ enum
 
 #define PRIV(i) (((GtkMvcAdaptor*)(i))->_private)
 
-G_DEFINE_TYPE (GtkMvcAdaptor, gtk_mvc_adaptor, GTK_TYPE_LABEL);
+G_DEFINE_TYPE (GtkMvcAdaptor, gtk_mvc_adaptor, GTK_TYPE_WIDGET);
 
 static void
 gtk_mvc_adaptor_init (GtkMvcAdaptor* self)
 {
   PRIV (self) = G_TYPE_INSTANCE_GET_PRIVATE (self, GTK_MVC_TYPE_ADAPTOR, GtkMvcAdaptorPrivate);
+
+  GTK_WIDGET_SET_FLAGS (self, GTK_NO_WINDOW);
 }
 
 static void
@@ -171,7 +173,6 @@ GtkWidget*
 gtk_mvc_adaptor_new (GtkMvcView* view)
 {
   return g_object_new (GTK_MVC_TYPE_ADAPTOR,
-                       "label", "GtkMvcAdaptor",
                        "view", view,
                        NULL);
 }
