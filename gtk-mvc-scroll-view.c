@@ -20,10 +20,12 @@
 
 #include "gtk-mvc-scroll-view.h"
 
+#if 0
 struct _GtkMvcScrollViewPrivate
 {
   cairo_rectangle_t  position;
 };
+#endif
 
 #define PRIV(i) (((GtkMvcScrollView*)(i))->_private)
 
@@ -35,20 +37,17 @@ G_DEFINE_TYPE_WITH_CODE (GtkMvcScrollView, gtk_scroll_view, GTK_MVC_TYPE_DEFAULT
 static void
 gtk_scroll_view_init (GtkMvcScrollView* self)
 {
+#if 0
   PRIV (self) = G_TYPE_INSTANCE_GET_PRIVATE (self, GTK_MVC_TYPE_SCROLL_VIEW, GtkMvcScrollViewPrivate);
+#endif
 }
 
 static void
 gtk_scroll_view_class_init (GtkMvcScrollViewClass* self_class)
 {
+#if 0
   g_type_class_add_private (self_class, sizeof (GtkMvcScrollViewPrivate));
-}
-
-static void
-get_position (GtkMvcView       * view,
-              cairo_rectangle_t* position)
-{
-  *position = PRIV (view)->position;
+#endif
 }
 
 static void
@@ -129,19 +128,10 @@ query_size (GtkMvcView    * view,
 }
 
 static void
-set_position (GtkMvcView       * view,
-              cairo_rectangle_t* position)
-{
-  PRIV (view)->position = *position;
-}
-
-static void
 implement_gtk_mvc_view (GtkMvcViewIface* iface)
 {
-  iface->get_position = get_position;
   iface->paint        = paint;
   iface->query_size   = query_size;
-  iface->set_position = set_position;
 }
 
 GtkMvcView*
