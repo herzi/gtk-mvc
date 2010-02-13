@@ -50,10 +50,63 @@ paint (GtkMvcView            * view,
        cairo_rectangle_t     * area,
        cairo_rectangle_list_t* region)
 {
-  PangoLayout* layout = pango_cairo_create_layout (cr);
-  pango_layout_set_text (layout, "GtkMvcScrollView", -1);
-  pango_cairo_show_layout (cr, layout);
-  g_object_unref (layout);
+  cairo_save (cr);
+
+  cairo_set_line_width (cr, 1.0);
+
+  /* draw full area */
+  cairo_rectangle (cr,
+                   0.0, 0.0,
+                   PRIV (view)->position.width,
+                   PRIV (view)->position.height);
+  cairo_set_source_rgb (cr,
+                        1.0 / 0xff * 0x4e,
+                        1.0 / 0xff * 0x9a,
+                        1.0 / 0xff * 0x06);
+  cairo_fill (cr);
+
+  /* draw top button */
+  cairo_rectangle (cr,
+                   0.5, 0.5,
+                   PRIV (view)->position.width - 1.0, PRIV (view)->position.width - 1.0);
+  cairo_set_source_rgb (cr,
+                        1.0 / 0xff * 0x20,
+                        1.0 / 0xff * 0x4a,
+                        1.0 / 0xff * 0x87);
+  cairo_fill_preserve (cr);
+  cairo_set_source_rgb (cr,
+                        1.0 / 0xff * 0x72,
+                        1.0 / 0xff * 0x9f,
+                        1.0 / 0xff * 0xcf);
+  cairo_stroke (cr);
+
+  /* draw indicator */
+  cairo_rectangle (cr,
+                   0.5, PRIV (view)->position.width + 0.5,
+                   PRIV (view)->position.width - 1.0,
+                   PRIV (view)->position.height - 2 * PRIV (view)->position.width - 1.0);
+  cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.25);
+  cairo_fill_preserve (cr);
+  cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.75);
+  cairo_stroke (cr);
+
+  /* draw bottom button */
+  cairo_rectangle (cr,
+                   0.5,
+                   PRIV (view)->position.height - PRIV (view)->position.width + 0.5,
+                   PRIV (view)->position.width - 1.0, PRIV (view)->position.width - 1.0);
+  cairo_set_source_rgb (cr,
+                        1.0 / 0xff * 0x20,
+                        1.0 / 0xff * 0x4a,
+                        1.0 / 0xff * 0x87);
+  cairo_fill_preserve (cr);
+  cairo_set_source_rgb (cr,
+                        1.0 / 0xff * 0x72,
+                        1.0 / 0xff * 0x9f,
+                        1.0 / 0xff * 0xcf);
+  cairo_stroke (cr);
+
+  cairo_restore (cr);
 }
 
 static void
@@ -61,8 +114,8 @@ query_size (GtkMvcView    * view,
             gtk_mvc_size_t* size)
 {
   /* FIXME: add realize() equivalent */
-  size->width = 100;
-  size->height = 15;
+  size->width = 15; /* width */
+  size->height = 45; /* (2 Buttons + 1 Scroll Area) * width */
 }
 
 static void

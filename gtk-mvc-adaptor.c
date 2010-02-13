@@ -101,6 +101,19 @@ size_request (GtkWidget     * widget,
     }
 }
 
+static void
+size_allocate (GtkWidget    * widget,
+               GtkAllocation* allocation)
+{
+  GTK_WIDGET_CLASS (gtk_mvc_adaptor_parent_class)->size_allocate (widget, allocation);
+
+  if (PRIV (widget)->view)
+    {
+      cairo_rectangle_t  position = {allocation->x, allocation->y, allocation->width, allocation->height};
+      gtk_mvc_view_set_position (PRIV (widget)->view, &position);
+    }
+}
+
 static gboolean
 expose_event (GtkWidget     * widget,
               GdkEventExpose* event)
@@ -163,8 +176,9 @@ gtk_mvc_adaptor_class_init (GtkMvcAdaptorClass* self_class)
                                                         G_TYPE_OBJECT,
                                                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
-  widget_class->size_request = size_request;
-  widget_class->expose_event = expose_event;
+  widget_class->size_request  = size_request;
+  widget_class->size_allocate = size_allocate;
+  widget_class->expose_event  = expose_event;
 
   g_type_class_add_private (self_class, sizeof (GtkMvcAdaptorPrivate));
 }

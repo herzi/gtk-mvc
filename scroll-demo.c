@@ -23,6 +23,8 @@
 #include <gtk/gtk.h>
 #include "gtk-mvc.h"
 
+#include <glib/gi18n.h>
+
 int
 main (int   argc,
       char**argv)
@@ -42,6 +44,8 @@ main (int   argc,
   g_object_add_weak_pointer (G_OBJECT (window), (gpointer*)&window);
   g_signal_connect (window, "destroy",
                     G_CALLBACK (gtk_main_quit), NULL);
+  gtk_window_set_title (GTK_WINDOW (window), _("MVC based Scroll Container"));
+  gtk_window_set_default_size (GTK_WINDOW (window), 400, 300);
 
   gtk_container_add (GTK_CONTAINER (box), viewport);
   gtk_box_pack_start (GTK_BOX (box), scroll,
