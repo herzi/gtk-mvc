@@ -14,7 +14,8 @@ Class Overview:
      |   + GtkMvcAdaptor: a GtkWidget that embeds a GtkMvcView/GtkMvcController
      |     into a GtkContainer (so we have a proper migration path)
      + GtkMvcDefaultView: an object providing sane defaults for implementing new views
-       + GtkMvcScrollView: the view for the scrollbar implementation
+     | + GtkMvcButtonView: the view for the button
+     | + GtkMvcScrollView: the view for the scrollbar implementation
      + GtkMvcScrollController: the controller for the scrollbar implementation
      + GtkMvcScrollModel: the model for the scrollbar implementation
  + GTypeInterface
