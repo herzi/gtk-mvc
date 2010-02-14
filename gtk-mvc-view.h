@@ -21,8 +21,8 @@
 #ifndef GTK_MVC_VIEW_H
 #define GTK_MVC_VIEW_H
 
-#include <glib-object.h>
 #include <cairo.h>
+#include "gtk-mvc-controller.h"
 #include "gtk-mvc-primitives.h"
 
 G_BEGIN_DECLS
@@ -36,17 +36,20 @@ typedef struct _GtkMvcViewIface GtkMvcViewIface;
 #define GTK_MVC_IS_VIEW(i)        (G_TYPE_CHECK_INSTANCE_TYPE ((i), GTK_MVC_TYPE_VIEW))
 #define GTK_MVC_VIEW_GET_IFACE(i) (G_TYPE_INSTANCE_GET_INTERFACE ((i), GTK_MVC_TYPE_VIEW, GtkMvcViewIface))
 
-GType  gtk_mvc_view_get_type     (void);
-void   gtk_mvc_view_get_position (GtkMvcView            * self,
-                                  cairo_rectangle_t     * position);
-void   gtk_mvc_view_paint        (GtkMvcView            * self,
-                                  cairo_t               * context,
-                                  cairo_rectangle_t     * area,
-                                  cairo_rectangle_list_t* region);
-void   gtk_mvc_view_query_size   (GtkMvcView            * self,
-                                  gtk_mvc_size_t        * size);
-void   gtk_mvc_view_set_position (GtkMvcView            * self,
-                                  cairo_rectangle_t     * position);
+GType             gtk_mvc_view_get_type       (void);
+GtkMvcController* gtk_mvc_view_get_controller (GtkMvcView            * self);
+void              gtk_mvc_view_get_position   (GtkMvcView            * self,
+                                               cairo_rectangle_t     * position);
+void              gtk_mvc_view_paint          (GtkMvcView            * self,
+                                               cairo_t               * context,
+                                               cairo_rectangle_t     * area,
+                                               cairo_rectangle_list_t* region);
+void              gtk_mvc_view_query_size     (GtkMvcView            * self,
+                                               gtk_mvc_size_t        * size);
+void              gtk_mvc_view_set_controller (GtkMvcView            * self,
+                                               GtkMvcController      * controller);
+void              gtk_mvc_view_set_position   (GtkMvcView            * self,
+                                               cairo_rectangle_t     * position);
 
 struct _GtkMvcViewIface
 {

@@ -44,6 +44,12 @@ gtk_mvc_view_get_type (void)
   return type;
 }
 
+GtkMvcController*
+gtk_mvc_view_get_controller (GtkMvcView* self)
+{
+  return NULL;
+}
+
 void
 gtk_mvc_view_get_position (GtkMvcView       * self,
                            cairo_rectangle_t* position)
@@ -117,6 +123,13 @@ gtk_mvc_view_query_size (GtkMvcView    * self,
     {
       iface->query_size (self, size);
     }
+}
+
+void
+gtk_mvc_view_set_controller (GtkMvcView      * self,
+                             GtkMvcController* controller)
+{
+  ;
 }
 
 void
