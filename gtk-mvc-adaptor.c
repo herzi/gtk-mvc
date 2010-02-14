@@ -20,8 +20,11 @@
 
 #include "gtk-mvc-adaptor.h"
 
+#include "gdk-window.h"
+
 struct _GtkMvcAdaptorPrivate
 {
+  GdkWindow * event_window;
   GtkMvcView* view;
 };
 
@@ -87,6 +90,32 @@ set_property (GObject     * object,
 }
 
 static void
+map (GtkWidget* widget)
+{
+  GTK_WIDGET_CLASS (gtk_mvc_adaptor_parent_class)->map (widget);
+
+  gdk_window_show_unraised (PRIV (widget)->event_window);
+}
+
+static void
+realize (GtkWidget* widget)
+{
+  GTK_WIDGET_CLASS (gtk_mvc_adaptor_parent_class)->realize (widget);
+
+  PRIV (widget)->event_window = gfc_gdk_window_new (widget->window,
+                                                    "class", GDK_INPUT_ONLY,
+                                                    "event-mask", GDK_ALL_EVENTS_MASK,
+                                                    "x", widget->allocation.x,
+                                                    "y", widget->allocation.y,
+                                                    "width", widget->allocation.width,
+                                                    "height", widget->allocation.height,
+                                                    NULL);
+  gdk_window_set_user_data (PRIV (widget)->event_window, widget);
+
+  GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
+}
+
+static void
 size_request (GtkWidget     * widget,
               GtkRequisition* request)
 {
@@ -112,6 +141,13 @@ size_allocate (GtkWidget    * widget,
       cairo_rectangle_t  position = {allocation->x, allocation->y, allocation->width, allocation->height};
       gtk_mvc_view_set_position (PRIV (widget)->view, &position);
     }
+
+  if (GTK_WIDGET_REALIZED (widget))
+    {
+      gdk_window_move_resize (PRIV (widget)->event_window,
+                              allocation->x, allocation->y,
+                              allocation->width, allocation->height);
+    }
 }
 
 static gboolean
@@ -132,7 +168,7 @@ expose_event (GtkWidget     * widget,
               event->area.height
       };
       GdkRectangle          * rectangles = NULL;
-      cairo_t               * context = gdk_cairo_create (widget->window);
+      cairo_t               * context = gdk_cairo_create (event->window);
       size_t                  iter;
 
       gdk_region_get_rectangles (event->region, &rectangles, &region.num_rectangles);
@@ -161,6 +197,22 @@ expose_event (GtkWidget     * widget,
 }
 
 static void
+unmap (GtkWidget* widget)
+{
+  gdk_window_hide (PRIV (widget)->event_window);
+
+  GTK_WIDGET_CLASS (gtk_mvc_adaptor_parent_class)->unmap (widget);
+}
+
+static void
+unrealize (GtkWidget* widget)
+{
+  gdk_window_destroy (PRIV (widget)->event_window);
+
+  GTK_WIDGET_CLASS (gtk_mvc_adaptor_parent_class)->unrealize (widget);
+}
+
+static void
 gtk_mvc_adaptor_class_init (GtkMvcAdaptorClass* self_class)
 {
   GObjectClass* object_class   = G_OBJECT_CLASS (self_class);
@@ -175,9 +227,13 @@ gtk_mvc_adaptor_class_init (GtkMvcAdaptorClass* self_class)
                                                         G_TYPE_OBJECT,
                                                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
-  widget_class->size_request  = size_request;
-  widget_class->size_allocate = size_allocate;
-  widget_class->expose_event  = expose_event;
+  widget_class->expose_event        = expose_event;
+  widget_class->map                 = map;
+  widget_class->realize             = realize;
+  widget_class->size_request        = size_request;
+  widget_class->size_allocate       = size_allocate;
+  widget_class->unmap               = unmap;
+  widget_class->unrealize           = unrealize;
 
   g_type_class_add_private (self_class, sizeof (GtkMvcAdaptorPrivate));
 }
