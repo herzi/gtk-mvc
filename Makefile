@@ -11,6 +11,8 @@ clean:
 	rm -rf *.o libscoll.so scroll-demo test-mvc
 
 libscroll_so_sources=\
+	gdk-window.c \
+	gdk-window.h \
 	gtk-mvc.h \
 	gtk-mvc-adaptor.c \
 	gtk-mvc-adaptor.h \
