@@ -18,17 +18,30 @@
  * USA
  */
 
-#ifndef GTK_MVC_H
-#define GTK_MVC_H
+#ifndef GTK_MVC_CONTROLLER_H
+#define GTK_MVC_CONTROLLER_H
 
-#include "gtk-mvc-adaptor.h"
-#include "gtk-mvc-button-view.h"
-#include "gtk-mvc-controller.h"
-#include "gtk-mvc-default-view.h"
-#include "gtk-mvc-primitives.h"
-#include "gtk-mvc-scroll-view.h"
-#include "gtk-mvc-view.h"
+#include <glib-object.h>
 
-#endif /* !GTK_MVC_H */
+G_BEGIN_DECLS
+
+typedef struct _GtkMvcController      GtkMvcController;
+typedef struct _GtkMvcControllerIface GtkMvcControllerIface;
+
+#define GTK_MVC_TYPE_CONTROLLER         (gtk_mvc_controller_get_type ())
+#define GTK_MVC_CONTROLLER(i)           (G_TYPE_CHECK_INSTANCE_CAST ((i), GTK_MVC_TYPE_CONTROLLER, GtkMvcController))
+#define GTK_MVC_IS_CONTROLLER(i)        (G_TYPE_CHECK_INSTANCE_TYPE ((i), GTK_MVC_TYPE_CONTROLLER))
+#define GTK_MVC_CONTROLLER_GET_IFACE(i) (G_TYPE_INSTANCE_GET_INTERFACE ((i), GTK_MVC_TYPE_CONTROLLER, GtkMvcControllerIface))
+
+GType gtk_mvc_controller_get_type (void);
+
+struct _GtkMvcControllerIface
+{
+  GTypeInterface  base_interface;
+};
+
+G_END_DECLS
+
+#endif /* !GTK_MVC_CONTROLLER_H */
 
 /* vim:set et sw=2 cino=t0,f0,(0,{s,>2s,n-1s,^-1s,e2s: */

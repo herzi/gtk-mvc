@@ -18,17 +18,25 @@
  * USA
  */
 
-#ifndef GTK_MVC_H
-#define GTK_MVC_H
-
-#include "gtk-mvc-adaptor.h"
-#include "gtk-mvc-button-view.h"
 #include "gtk-mvc-controller.h"
-#include "gtk-mvc-default-view.h"
-#include "gtk-mvc-primitives.h"
-#include "gtk-mvc-scroll-view.h"
-#include "gtk-mvc-view.h"
 
-#endif /* !GTK_MVC_H */
+GType
+gtk_mvc_controller_get_type (void)
+{
+  static GType type = 0;
+
+  if (g_once_init_enter (&type))
+    {
+      GType registered = g_type_register_static_simple (G_TYPE_INTERFACE,
+                                                        G_STRINGIFY (GtkMvcController),
+                                                        sizeof (GtkMvcControllerIface),
+                                                        NULL, 0,
+                                                        NULL, 0);
+
+      g_once_init_leave (&type, registered);
+    }
+
+  return type;
+}
 
 /* vim:set et sw=2 cino=t0,f0,(0,{s,>2s,n-1s,^-1s,e2s: */
