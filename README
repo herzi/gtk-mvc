@@ -14,6 +14,7 @@ Class Overview:
      |   + GtkMvcAdaptor: a GtkWidget that embeds a GtkMvcView/GtkMvcController
      |     into a GtkContainer (so we have a proper migration path)
      + GtkMvcDefaultController: a noop controller implementation
+     | + GtkMvcButtonController: the controller for the button
      | + GtkMvcScrollController: the controller for the scrollbar implementation
      + GtkMvcDefaultView: an object providing sane defaults for implementing new views
      | + GtkMvcButtonView: the view for the button
