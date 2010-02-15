@@ -83,6 +83,12 @@ create_default_controller (GtkMvcView* self)
                        NULL);
 }
 
+static GtkMvcController*
+get_controller (GtkMvcView* view)
+{
+  return PRIV (view)->controller;
+}
+
 static void
 get_position (GtkMvcView       * view,
               cairo_rectangle_t* position)
@@ -125,6 +131,7 @@ static void
 implement_gtk_mvc_view (GtkMvcViewIface* iface)
 {
   iface->create_default_controller = create_default_controller;
+  iface->get_controller            = get_controller;
   iface->get_position              = get_position;
   iface->set_controller            = set_controller;
   iface->set_position              = set_position;

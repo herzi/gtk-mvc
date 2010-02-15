@@ -58,6 +58,7 @@ struct _GtkMvcViewIface
 
   /* vtable */
   GtkMvcController* (*create_default_controller) (GtkMvcView            * self);
+  GtkMvcController* (*get_controller)            (GtkMvcView            * self);
   void              (*get_position)              (GtkMvcView            * self,
                                                   cairo_rectangle_t     * position);
   void              (*paint)                     (GtkMvcView            * self,
