@@ -60,9 +60,14 @@ create_default_controller (GtkMvcView* view)
 }
 
 static GList*
-enumerate_children ()
+enumerate_children (GtkMvcView* view)
 {
-  return NULL;
+  GList* result = NULL;
+
+  result = g_list_prepend (NULL, PRIV (view)->button_down);
+  result = g_list_prepend (result, PRIV (view)->button_up);
+
+  return result;
 }
 
 static void
