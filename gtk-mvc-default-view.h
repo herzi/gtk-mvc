@@ -37,7 +37,7 @@ typedef struct _GtkMvcDefaultViewPrivate GtkMvcDefaultViewPrivate;
 #define GTK_MVC_DEFAULT_VIEW_GET_CLASS(i) (G_TYPE_INSTANCE_GET_CLASS ((i), GTK_MVC_TYPE_DEFAULT_VIEW, GtkMvcDefaultViewClass))
 
 GType       gtk_mvc_default_view_get_type (void);
-/* FIXME: GtkMvcView* gtk_mvc_default_view_new (void);*/
+GtkMvcView* gtk_mvc_default_view_new      (void);
 
 struct _GtkMvcDefaultView
 {

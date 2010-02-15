@@ -35,6 +35,17 @@ test_adaptor_constructor (void)
 }
 
 static void
+test_default_view_constructor (void)
+{
+  GtkMvcView* view = gtk_mvc_default_view_new ();
+  g_object_ref_sink (view);
+
+  g_assert_cmpstr (G_OBJECT_TYPE_NAME (view), ==, "GtkMvcDefaultView");
+
+  g_object_unref (view);
+}
+
+static void
 test_view_constructor (void)
 {
   GtkMvcView* view = gtk_mvc_scroll_view_new ();
@@ -95,6 +106,7 @@ main (int   argc,
   gtk_test_init (&argc, &argv, NULL);
 
   g_test_add_func ("/mvc-adaptor/constructor", test_adaptor_constructor);
+  g_test_add_func ("/GtkMvcDefaultView/constructor", test_default_view_constructor);
   g_test_add_func ("/scroll/view/constructor", test_view_constructor);
   g_test_add_func ("/scroll/view/constructor-embed", test_view_constructor_embed);
   g_test_add_func ("/scroll/view/query-size", test_scroll_view_query_size);

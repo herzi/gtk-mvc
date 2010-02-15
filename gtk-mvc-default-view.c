@@ -67,4 +67,11 @@ implement_gtk_mvc_view (GtkMvcViewIface* iface)
   iface->set_position = set_position;
 }
 
+GtkMvcView*
+gtk_mvc_default_view_new (void)
+{
+  return g_object_new (GTK_MVC_TYPE_DEFAULT_VIEW,
+                       NULL);
+}
+
 /* vim:set et sw=2 cino=t0,f0,(0,{s,>2s,n-1s,^-1s,e2s: */
