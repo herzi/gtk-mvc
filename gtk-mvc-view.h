@@ -22,13 +22,14 @@
 #define GTK_MVC_VIEW_H
 
 #include <cairo.h>
-#include "gtk-mvc-controller.h"
 #include "gtk-mvc-primitives.h"
-
-G_BEGIN_DECLS
 
 typedef struct _GtkMvcView      GtkMvcView;
 typedef struct _GtkMvcViewIface GtkMvcViewIface;
+
+#include "gtk-mvc-controller.h"
+
+G_BEGIN_DECLS
 
 #define GTK_MVC_TYPE_VIEW         (gtk_mvc_view_get_type ())
 #define GTK_MVC_VIEW(i)           (G_TYPE_CHECK_INSTANCE_CAST ((i), GTK_MVC_TYPE_VIEW, GtkMvcView))
@@ -40,6 +41,9 @@ GType             gtk_mvc_view_get_type               (void);
 GtkMvcController* gtk_mvc_view_get_controller         (GtkMvcView            * self);
 void              gtk_mvc_view_get_position           (GtkMvcView            * self,
                                                        cairo_rectangle_t     * position);
+gboolean          gtk_mvc_view_hit_test               (GtkMvcView            * self,
+                                                       double                  x,
+                                                       double                  y);
 void              gtk_mvc_view_paint                  (GtkMvcView            * self,
                                                        cairo_t               * context,
                                                        cairo_rectangle_t     * area,
@@ -61,6 +65,9 @@ struct _GtkMvcViewIface
   GtkMvcController* (*get_controller)            (GtkMvcView            * self);
   void              (*get_position)              (GtkMvcView            * self,
                                                   cairo_rectangle_t     * position);
+  gboolean          (*hit_test)                  (GtkMvcView            * self,
+                                                  double                  x,
+                                                  double                  y);
   void              (*paint)                     (GtkMvcView            * self,
                                                   cairo_t               * context,
                                                   cairo_rectangle_t     * area,

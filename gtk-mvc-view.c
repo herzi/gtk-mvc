@@ -85,6 +85,29 @@ gtk_mvc_view_get_position (GtkMvcView       * self,
     }
 }
 
+gboolean
+gtk_mvc_view_hit_test (GtkMvcView* self,
+                       double      x,
+                       double      y)
+{
+  GtkMvcViewIface* iface;
+
+  g_return_val_if_fail (GTK_MVC_IS_VIEW (self), FALSE);
+
+  iface = GTK_MVC_VIEW_GET_IFACE (self);
+
+  if (!iface->hit_test)
+    {
+      g_warning ("%s(%s): the type %s doesn't implement the GtkMvcViewIface->hit_test() function",
+                 G_STRFUNC, G_STRLOC,
+                 G_OBJECT_TYPE_NAME (self));
+
+      return FALSE;
+    }
+
+  return iface->hit_test (self, x, y);
+}
+
 void
 gtk_mvc_view_paint (GtkMvcView            * self,
                     cairo_t               * context,
