@@ -39,6 +39,26 @@ gtk_mvc_controller_get_type (void)
   return type;
 }
 
+GtkMvcView*
+gtk_mvc_controller_get_view (GtkMvcController* self)
+{
+  GtkMvcControllerIface* iface;
+
+  g_return_if_fail (GTK_MVC_IS_CONTROLLER (self));
+
+  iface = GTK_MVC_CONTROLLER_GET_IFACE (self);
+  if (!iface->get_view)
+    {
+      g_warning ("%s(%s): the type %s doesn't implement GtkMvcControllerIface->get_view",
+                 G_STRFUNC, G_STRLOC,
+                 G_OBJECT_TYPE_NAME (self));
+
+      return NULL;
+    }
+
+  return iface->get_view (self);
+}
+
 gboolean
 gtk_mvc_controller_handle_button_press (GtkMvcController* self,
                                         GdkDevice       * device,
@@ -63,6 +83,29 @@ gtk_mvc_controller_handle_button_press (GtkMvcController* self,
   else
     {
       return iface->handle_button_press (self, device, x, y);
+    }
+}
+
+void
+gtk_mvc_controller_introduce_view (GtkMvcController* self,
+                                   GtkMvcView      * view)
+{
+  GtkMvcControllerIface* iface;
+
+  g_return_if_fail (GTK_MVC_IS_CONTROLLER (self));
+  g_return_if_fail (!view || GTK_MVC_IS_VIEW (view));
+
+  iface = GTK_MVC_CONTROLLER_GET_IFACE (self);
+
+  if (!iface->introduce_view)
+    {
+      g_warning ("%s(%s): the type %s doesn't implement GtkMvcControllerIface->introduce_view",
+                 G_STRFUNC, G_STRLOC,
+                 G_OBJECT_TYPE_NAME (self));
+    }
+  else
+    {
+      iface->introduce_view (self, view);
     }
 }
 

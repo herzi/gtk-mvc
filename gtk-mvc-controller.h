@@ -23,31 +23,39 @@
 
 #include <gdk/gdk.h>
 
-G_BEGIN_DECLS
-
 typedef struct _GtkMvcController      GtkMvcController;
 typedef struct _GtkMvcControllerIface GtkMvcControllerIface;
+
+#include "gtk-mvc-view.h"
+
+G_BEGIN_DECLS
 
 #define GTK_MVC_TYPE_CONTROLLER         (gtk_mvc_controller_get_type ())
 #define GTK_MVC_CONTROLLER(i)           (G_TYPE_CHECK_INSTANCE_CAST ((i), GTK_MVC_TYPE_CONTROLLER, GtkMvcController))
 #define GTK_MVC_IS_CONTROLLER(i)        (G_TYPE_CHECK_INSTANCE_TYPE ((i), GTK_MVC_TYPE_CONTROLLER))
 #define GTK_MVC_CONTROLLER_GET_IFACE(i) (G_TYPE_INSTANCE_GET_INTERFACE ((i), GTK_MVC_TYPE_CONTROLLER, GtkMvcControllerIface))
 
-GType    gtk_mvc_controller_get_type            (void);
-gboolean gtk_mvc_controller_handle_button_press (GtkMvcController* controller,
-                                                 GdkDevice       * device,
-                                                 double            x,
-                                                 double            y);
+GType       gtk_mvc_controller_get_type            (void);
+GtkMvcView* gtk_mvc_controller_get_view            (GtkMvcController* controller);
+gboolean    gtk_mvc_controller_handle_button_press (GtkMvcController* controller,
+                                                    GdkDevice       * device,
+                                                    double            x,
+                                                    double            y);
+void        gtk_mvc_controller_introduce_view      (GtkMvcController* controller,
+                                                    GtkMvcView      * view);
 
 struct _GtkMvcControllerIface
 {
   GTypeInterface  base_interface;
 
   /* vtable */
-  gboolean (*handle_button_press) (GtkMvcController* controller,
-                                   GdkDevice       * device,
-                                   double            x,
-                                   double            y);
+  GtkMvcView* (*get_view)            (GtkMvcController* controller);
+  gboolean    (*handle_button_press) (GtkMvcController* controller,
+                                      GdkDevice       * device,
+                                      double            x,
+                                      double            y);
+  void        (*introduce_view)      (GtkMvcController* controller,
+                                      GtkMvcView      * view);
 };
 
 G_END_DECLS
