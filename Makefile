@@ -20,6 +20,8 @@ libscroll_so_sources=\
 	gtk-mvc-button-view.h \
 	gtk-mvc-controller.c \
 	gtk-mvc-controller.h \
+	gtk-mvc-default-controller.c \
+	gtk-mvc-default-controller.h \
 	gtk-mvc-default-view.c \
 	gtk-mvc-default-view.h \
 	gtk-mvc-primitives.h \
