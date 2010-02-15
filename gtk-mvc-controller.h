@@ -21,7 +21,7 @@
 #ifndef GTK_MVC_CONTROLLER_H
 #define GTK_MVC_CONTROLLER_H
 
-#include <glib-object.h>
+#include <gdk/gdk.h>
 
 G_BEGIN_DECLS
 
@@ -33,11 +33,21 @@ typedef struct _GtkMvcControllerIface GtkMvcControllerIface;
 #define GTK_MVC_IS_CONTROLLER(i)        (G_TYPE_CHECK_INSTANCE_TYPE ((i), GTK_MVC_TYPE_CONTROLLER))
 #define GTK_MVC_CONTROLLER_GET_IFACE(i) (G_TYPE_INSTANCE_GET_INTERFACE ((i), GTK_MVC_TYPE_CONTROLLER, GtkMvcControllerIface))
 
-GType gtk_mvc_controller_get_type (void);
+GType    gtk_mvc_controller_get_type            (void);
+gboolean gtk_mvc_controller_handle_button_press (GtkMvcController* controller,
+                                                 GdkDevice       * device,
+                                                 double            x,
+                                                 double            y);
 
 struct _GtkMvcControllerIface
 {
   GTypeInterface  base_interface;
+
+  /* vtable */
+  gboolean (*handle_button_press) (GtkMvcController* controller,
+                                   GdkDevice       * device,
+                                   double            x,
+                                   double            y);
 };
 
 G_END_DECLS

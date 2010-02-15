@@ -39,4 +39,31 @@ gtk_mvc_controller_get_type (void)
   return type;
 }
 
+gboolean
+gtk_mvc_controller_handle_button_press (GtkMvcController* self,
+                                        GdkDevice       * device,
+                                        double            x,
+                                        double            y)
+{
+  GtkMvcControllerIface* iface;
+
+  g_return_if_fail (GTK_MVC_IS_CONTROLLER (self));
+  g_return_if_fail (GDK_IS_DEVICE (device));
+
+  iface = GTK_MVC_CONTROLLER_GET_IFACE (self);
+
+  if (!iface->handle_button_press)
+    {
+      g_warning ("%s(%s): the type %s doesn't implement GtkMvcControllerIface->handle_button_press",
+                 G_STRFUNC, G_STRLOC,
+                 G_OBJECT_TYPE_NAME (self));
+
+      return FALSE;
+    }
+  else
+    {
+      return iface->handle_button_press (self, device, x, y);
+    }
+}
+
 /* vim:set et sw=2 cino=t0,f0,(0,{s,>2s,n-1s,^-1s,e2s: */
