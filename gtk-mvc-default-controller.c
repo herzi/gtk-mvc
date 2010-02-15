@@ -20,8 +20,10 @@
 
 #include "gtk-mvc-default-controller.h"
 
+static void implement_gtk_mvc_controller (GtkMvcControllerIface* iface);
+
 G_DEFINE_TYPE_WITH_CODE (GtkMvcDefaultController, gtk_mvc_default_controller, G_TYPE_INITIALLY_UNOWNED,
-                         G_IMPLEMENT_INTERFACE (GTK_MVC_TYPE_CONTROLLER, NULL));
+                         G_IMPLEMENT_INTERFACE (GTK_MVC_TYPE_CONTROLLER, implement_gtk_mvc_controller));
 
 static void
 gtk_mvc_default_controller_init (GtkMvcDefaultController* self)
@@ -30,5 +32,20 @@ gtk_mvc_default_controller_init (GtkMvcDefaultController* self)
 static void
 gtk_mvc_default_controller_class_init (GtkMvcDefaultControllerClass* self_class)
 {}
+
+static gboolean
+handle_button_press (GtkMvcController* controller,
+                     GdkDevice       * device,
+                     double            x,
+                     double            y)
+{
+  return FALSE;
+}
+
+static void
+implement_gtk_mvc_controller (GtkMvcControllerIface* iface)
+{
+  iface->handle_button_press = handle_button_press;
+}
 
 /* vim:set et sw=2 cino=t0,f0,(0,{s,>2s,n-1s,^-1s,e2s: */
