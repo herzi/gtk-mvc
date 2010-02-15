@@ -52,6 +52,13 @@ gtk_scroll_view_class_init (GtkMvcScrollViewClass* self_class)
   g_type_class_add_private (self_class, sizeof (GtkMvcScrollViewPrivate));
 }
 
+static GtkMvcController*
+create_default_controller (GtkMvcView* view)
+{
+  return g_object_new (GTK_MVC_TYPE_SCROLL_CONTROLLER,
+                       NULL);
+}
+
 static void
 set_position (GtkMvcView       * view,
               cairo_rectangle_t* position)
@@ -125,9 +132,10 @@ implement_gtk_mvc_view (GtkMvcViewIface* iface)
 {
   gtk_mvc_scroll_view_parent_view_iface = g_type_interface_peek_parent (iface);
 
-  iface->set_position = set_position;
-  iface->paint        = paint;
-  iface->query_size   = query_size;
+  iface->create_default_controller = create_default_controller;
+  iface->set_position              = set_position;
+  iface->paint                     = paint;
+  iface->query_size                = query_size;
 }
 
 GtkMvcView*
