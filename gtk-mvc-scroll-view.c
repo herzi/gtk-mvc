@@ -59,6 +59,12 @@ create_default_controller (GtkMvcView* view)
                        NULL);
 }
 
+static GList*
+enumerate_children ()
+{
+  return NULL;
+}
+
 static void
 set_position (GtkMvcView       * view,
               cairo_rectangle_t* position)
@@ -133,6 +139,7 @@ implement_gtk_mvc_view (GtkMvcViewIface* iface)
   gtk_mvc_scroll_view_parent_view_iface = g_type_interface_peek_parent (iface);
 
   iface->create_default_controller = create_default_controller;
+  iface->enumerate_children        = enumerate_children;
   iface->set_position              = set_position;
   iface->paint                     = paint;
   iface->query_size                = query_size;

@@ -41,6 +41,7 @@ GType             gtk_mvc_view_get_type               (void);
 GtkMvcController* gtk_mvc_view_get_controller         (GtkMvcView            * self);
 void              gtk_mvc_view_get_position           (GtkMvcView            * self,
                                                        cairo_rectangle_t     * position);
+GList*            gtk_mvc_view_enumerate_children     (GtkMvcView            * self);
 gboolean          gtk_mvc_view_hit_test               (GtkMvcView            * self,
                                                        double                  x,
                                                        double                  y);
@@ -62,6 +63,7 @@ struct _GtkMvcViewIface
 
   /* vtable */
   GtkMvcController* (*create_default_controller) (GtkMvcView            * self);
+  GList*            (*enumerate_children)        (GtkMvcView            * self);
   GtkMvcController* (*get_controller)            (GtkMvcView            * self);
   void              (*get_position)              (GtkMvcView            * self,
                                                   cairo_rectangle_t     * position);

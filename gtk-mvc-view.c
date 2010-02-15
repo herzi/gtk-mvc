@@ -44,6 +44,25 @@ gtk_mvc_view_get_type (void)
   return type;
 }
 
+GList*
+gtk_mvc_view_enumerate_children (GtkMvcView* self)
+{
+  GtkMvcViewIface* iface;
+
+  g_return_val_if_fail (GTK_MVC_IS_VIEW (self), NULL);
+
+  iface = GTK_MVC_VIEW_GET_IFACE (self);
+  if (!iface->enumerate_children)
+    {
+      g_warning ("%s(%s): the type %s doesn't implement GtkMvcViewIface->enumerate_children",
+                 G_STRFUNC, G_STRLOC,
+                 G_OBJECT_TYPE_NAME (self));
+      return NULL;
+    }
+
+  return iface->enumerate_children (self);
+}
+
 GtkMvcController*
 gtk_mvc_view_get_controller (GtkMvcView* self)
 {

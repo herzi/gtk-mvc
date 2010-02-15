@@ -43,20 +43,28 @@ handle_button_press (GtkMvcController* controller,
 
   if (view)
     {
-#if 0
-      if (gtk_mvc_view_hit_test (button_up_view, x, y))
+      GList* children = gtk_mvc_view_enumerate_children (view);
+      GList* child;
+
+      gboolean handled = FALSE;
+
+      for (child = children; child && !handled; child = child->next)
         {
-          /* FIXME: pass on */
+          GtkMvcController* controller = gtk_mvc_view_get_controller (child->data);
+
+          if (controller)
+            {
+              /* FIXME: maybe translate coordinates? */
+              handled = gtk_mvc_controller_handle_button_press (controller, device, x, y);
+            }
         }
-      else if (gtk_mvc_view_hit_test (button_down_view, x, y))
+
+      g_list_free (children);
+
+      if (!handled)
         {
-          /* FIXME: pass on */
+          /* FIXME: ignore right now */
         }
-      else
-        {
-          /* FIXME: handle */
-        }
-#endif
     }
 
   return FALSE;
