@@ -108,6 +108,8 @@ set_controller (GtkMvcView      * view,
 
   if (PRIV (view)->controller)
     {
+      gtk_mvc_controller_introduce_view (PRIV (view)->controller,
+                                         NULL);
       g_object_unref (PRIV (view)->controller);
       PRIV (view)->controller = NULL;
     }
@@ -115,6 +117,9 @@ set_controller (GtkMvcView      * view,
   if (controller)
     {
       PRIV (view)->controller = g_object_ref_sink (controller);
+
+      gtk_mvc_controller_introduce_view (PRIV (view)->controller,
+                                         view);
     }
 }
 
