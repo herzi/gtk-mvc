@@ -22,6 +22,7 @@
 #define GTK_MVC_H
 
 #include "gtk-mvc-adaptor.h"
+#include "gtk-mvc-button-controller.h"
 #include "gtk-mvc-button-view.h"
 #include "gtk-mvc-controller.h"
 #include "gtk-mvc-default-controller.h"
