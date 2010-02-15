@@ -20,7 +20,10 @@
 
 #include "gtk-mvc-scroll-controller.h"
 
-G_DEFINE_TYPE (GtkMvcScrollController, gtk_mvc_scroll_controller, GTK_MVC_TYPE_DEFAULT_CONTROLLER);
+static void implement_gtk_mvc_controller (GtkMvcControllerIface* iface);
+
+G_DEFINE_TYPE_WITH_CODE (GtkMvcScrollController, gtk_mvc_scroll_controller, GTK_MVC_TYPE_DEFAULT_CONTROLLER,
+                         G_IMPLEMENT_INTERFACE (GTK_MVC_TYPE_CONTROLLER, implement_gtk_mvc_controller));
 
 static void
 gtk_mvc_scroll_controller_init (GtkMvcScrollController* self)
@@ -29,5 +32,40 @@ gtk_mvc_scroll_controller_init (GtkMvcScrollController* self)
 static void
 gtk_mvc_scroll_controller_class_init (GtkMvcScrollControllerClass* self_class)
 {}
+
+static gboolean
+handle_button_press (GtkMvcController* controller,
+                     GdkDevice       * device,
+                     double            x,
+                     double            y)
+{
+  GtkMvcView* view = gtk_mvc_controller_get_view (controller);
+
+  if (view)
+    {
+#if 0
+      if (gtk_mvc_view_hit_test (button_up_view, x, y))
+        {
+          /* FIXME: pass on */
+        }
+      else if (gtk_mvc_view_hit_test (button_down_view, x, y))
+        {
+          /* FIXME: pass on */
+        }
+      else
+        {
+          /* FIXME: handle */
+        }
+#endif
+    }
+
+  return FALSE;
+}
+
+static void
+implement_gtk_mvc_controller (GtkMvcControllerIface* iface)
+{
+  iface->handle_button_press = handle_button_press;
+}
 
 /* vim:set et sw=2 cino=t0,f0,(0,{s,>2s,n-1s,^-1s,e2s: */
