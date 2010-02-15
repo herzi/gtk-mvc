@@ -20,6 +20,8 @@
 
 #include "gtk-mvc-button-view.h"
 
+#include "gtk-mvc.h"
+
 static void implement_gtk_mvc_view (GtkMvcViewIface* iface);
 
 G_DEFINE_TYPE_WITH_CODE (GtkMvcButtonView, gtk_mvc_button_view, GTK_MVC_TYPE_DEFAULT_VIEW,
@@ -32,6 +34,31 @@ gtk_mvc_button_view_init (GtkMvcButtonView* self)
 static void
 gtk_mvc_button_view_class_init (GtkMvcButtonViewClass* self_class)
 {}
+
+static GtkMvcController*
+create_default_controller (GtkMvcView* view)
+{
+  return gtk_mvc_button_controller_new ();
+}
+
+static gboolean
+hit_test (GtkMvcView* view,
+          double      x,
+          double      y)
+{
+  cairo_rectangle_t  rectangle = {0.0, 0.0, 0.0, 0.0};
+
+  gtk_mvc_view_get_position (view, &rectangle);
+
+  if (x >= rectangle.x && y >= rectangle.y &&
+      x - rectangle.x <= rectangle.width &&
+      y - rectangle.y <= rectangle.height)
+    {
+      return TRUE;
+    }
+
+  return FALSE;
+}
 
 static void
 paint (GtkMvcView            * view,
@@ -61,7 +88,9 @@ paint (GtkMvcView            * view,
 static void
 implement_gtk_mvc_view (GtkMvcViewIface* iface)
 {
-  iface->paint = paint;
+  iface->create_default_controller = create_default_controller;
+  iface->hit_test                  = hit_test;
+  iface->paint                     = paint;
 }
 
 GtkMvcView*
