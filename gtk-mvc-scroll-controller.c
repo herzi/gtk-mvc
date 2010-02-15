@@ -1,7 +1,4 @@
-/* This file is part of ...
- *
- * AUTHORS
- *     Sven Herzberg  <set the EMAIL_ADDRESS environment variable>
+/* This file is part of herzi's playground
  *
  * Copyright (C) 2010  Sven Herzberg
  *
@@ -21,10 +18,16 @@
  * USA
  */
 
-#ifndef GTK_SCROLL_CONTROLLER_H
-#define GTK_SCROLL_CONTROLLER_H
+#include "gtk-mvc-scroll-controller.h"
 
+G_DEFINE_TYPE (GtkMvcScrollController, gtk_mvc_scroll_controller, GTK_MVC_TYPE_DEFAULT_CONTROLLER);
 
-#endif /* !GTK_SCROLL_CONTROLLER_H */
+static void
+gtk_mvc_scroll_controller_init (GtkMvcScrollController* self)
+{}
+
+static void
+gtk_mvc_scroll_controller_class_init (GtkMvcScrollControllerClass* self_class)
+{}
 
 /* vim:set et sw=2 cino=t0,f0,(0,{s,>2s,n-1s,^-1s,e2s: */

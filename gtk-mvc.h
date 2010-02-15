@@ -24,8 +24,10 @@
 #include "gtk-mvc-adaptor.h"
 #include "gtk-mvc-button-view.h"
 #include "gtk-mvc-controller.h"
+#include "gtk-mvc-default-controller.h"
 #include "gtk-mvc-default-view.h"
 #include "gtk-mvc-primitives.h"
+#include "gtk-mvc-scroll-controller.h"
 #include "gtk-mvc-scroll-view.h"
 #include "gtk-mvc-view.h"
 

@@ -25,12 +25,12 @@ libscroll_so_sources=\
 	gtk-mvc-default-view.c \
 	gtk-mvc-default-view.h \
 	gtk-mvc-primitives.h \
+	gtk-mvc-scroll-controller.c \
+	gtk-mvc-scroll-controller.h \
 	gtk-mvc-scroll-view.c \
 	gtk-mvc-scroll-view.h \
 	gtk-mvc-view.c \
 	gtk-mvc-view.h \
-	gtk-scroll-controller.c \
-	gtk-scroll-controller.h \
 	gtk-scroll-model.c \
 	gtk-scroll-model.h \
 	$(NULL)
