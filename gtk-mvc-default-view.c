@@ -20,9 +20,12 @@
 
 #include "gtk-mvc-default-view.h"
 
+#include "gtk-mvc-default-controller.h"
+
 struct _GtkMvcDefaultViewPrivate
 {
   cairo_rectangle_t  position;
+  GtkMvcController * controller;
 };
 
 #define PRIV(i) (((GtkMvcDefaultView*)(i))->_private)
@@ -39,9 +42,45 @@ gtk_mvc_default_view_init (GtkMvcDefaultView* self)
 }
 
 static void
+constructed (GObject* object)
+{
+  /* FIXME: NULL as of 2.22.4 - add a testcase to find out if this is maybe
+   * not required at some point in the future anymore */
+  if (G_OBJECT_CLASS (gtk_mvc_default_view_parent_class)->constructed)
+    {
+      G_OBJECT_CLASS (gtk_mvc_default_view_parent_class)->constructed (object);
+    }
+
+  if (!PRIV (object)->controller)
+    {
+      gtk_mvc_view_set_default_controller (GTK_MVC_VIEW (object));
+    }
+}
+
+static void
+dispose (GObject* object)
+{
+  gtk_mvc_view_set_controller (GTK_MVC_VIEW (object), NULL);
+
+  G_OBJECT_CLASS (gtk_mvc_default_view_parent_class)->dispose (object);
+}
+
+static void
 gtk_mvc_default_view_class_init (GtkMvcDefaultViewClass* self_class)
 {
+  GObjectClass* object_class = G_OBJECT_CLASS (self_class);
+
+  object_class->constructed = constructed;
+  object_class->dispose     = dispose;
+
   g_type_class_add_private (self_class, sizeof (GtkMvcDefaultViewPrivate));
+}
+
+static GtkMvcController*
+create_default_controller (GtkMvcView* self)
+{
+  return g_object_new (GTK_MVC_TYPE_DEFAULT_CONTROLLER,
+                       NULL);
 }
 
 static void
@@ -49,6 +88,28 @@ get_position (GtkMvcView       * view,
               cairo_rectangle_t* position)
 {
   *position = PRIV (view)->position;
+}
+
+static void
+set_controller (GtkMvcView      * view,
+                GtkMvcController* controller)
+{
+  if (PRIV (view)->controller == controller)
+    {
+      /* FIXME: test this */
+      return;
+    }
+
+  if (PRIV (view)->controller)
+    {
+      g_object_unref (PRIV (view)->controller);
+      PRIV (view)->controller = NULL;
+    }
+
+  if (controller)
+    {
+      PRIV (view)->controller = g_object_ref_sink (controller);
+    }
 }
 
 static void
@@ -63,8 +124,10 @@ set_position (GtkMvcView       * view,
 static void
 implement_gtk_mvc_view (GtkMvcViewIface* iface)
 {
-  iface->get_position = get_position;
-  iface->set_position = set_position;
+  iface->create_default_controller = create_default_controller;
+  iface->get_position              = get_position;
+  iface->set_controller            = set_controller;
+  iface->set_position              = set_position;
 }
 
 GtkMvcView*

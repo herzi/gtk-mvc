@@ -47,6 +47,8 @@ gtk_mvc_view_get_type (void)
 GtkMvcController*
 gtk_mvc_view_get_controller (GtkMvcView* self)
 {
+  g_warning ("unimplemented");
+
   return NULL;
 }
 
@@ -129,7 +131,64 @@ void
 gtk_mvc_view_set_controller (GtkMvcView      * self,
                              GtkMvcController* controller)
 {
-  ;
+  GtkMvcViewIface* iface;
+
+  g_return_if_fail (GTK_MVC_IS_VIEW (self));
+  g_return_if_fail (!controller || GTK_MVC_IS_CONTROLLER (controller));
+
+  iface = GTK_MVC_VIEW_GET_IFACE (self);
+  if (!iface->set_controller)
+    {
+      g_warning ("%s(%s): the type %s doesn't implement GtkMvcViewIface->set_controller",
+                 G_STRFUNC, G_STRLOC,
+                 G_OBJECT_TYPE_NAME (self));
+    }
+  else
+    {
+      iface->set_controller (self, controller);
+    }
+}
+
+void
+gtk_mvc_view_set_default_controller (GtkMvcView* self)
+{
+  GtkMvcViewIface* iface;
+
+  g_return_if_fail (GTK_MVC_IS_VIEW (self));
+
+  iface = GTK_MVC_VIEW_GET_IFACE (self);
+
+  if (!iface->create_default_controller)
+    {
+      /* FIXME: add tests for this */
+      g_warning ("%s(%s): the type %s doesn't implement GtkMvcViewIface->create_default_controller()",
+                 G_STRFUNC, G_STRLOC,
+                 G_OBJECT_TYPE_NAME (self));
+    }
+  else
+    {
+      GtkMvcController* controller = iface->create_default_controller (self);
+
+      if (!controller)
+        {
+          /* FIXME: test for this */
+          g_warning ("%s(%s): the type %s doesn't create a controller in GtkMvcViewIface->create_default_controller()",
+                     G_STRFUNC, G_STRLOC,
+                     G_OBJECT_TYPE_NAME (self));
+        }
+      else if (GTK_MVC_IS_CONTROLLER (controller))
+        {
+          gtk_mvc_view_set_controller (self, controller);
+        }
+      else
+        {
+          /* FIXME: test for this */
+          g_warning ("%s(%s): the type %s doesn't create an object implementing "
+                     "GtkMvcController in GtkMvcViewIface->create_default_controller()",
+                     G_STRFUNC, G_STRLOC,
+                     G_OBJECT_TYPE_NAME (self));
+        }
+    }
 }
 
 void
