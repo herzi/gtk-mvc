@@ -20,7 +20,10 @@
 
 #include "gtk-mvc-button-controller.h"
 
-G_DEFINE_TYPE (GtkMvcButtonController, gtk_mvc_button_controller, GTK_MVC_TYPE_DEFAULT_CONTROLLER);
+static void implement_gtk_mvc_controller (GtkMvcControllerIface* iface);
+
+G_DEFINE_TYPE_WITH_CODE (GtkMvcButtonController, gtk_mvc_button_controller, GTK_MVC_TYPE_DEFAULT_CONTROLLER,
+                         G_IMPLEMENT_INTERFACE (GTK_MVC_TYPE_CONTROLLER, implement_gtk_mvc_controller));
 
 static void
 gtk_mvc_button_controller_init (GtkMvcButtonController* self)
@@ -29,6 +32,29 @@ gtk_mvc_button_controller_init (GtkMvcButtonController* self)
 static void
 gtk_mvc_button_controller_class_init (GtkMvcButtonControllerClass* self_class)
 {}
+
+static gboolean
+handle_button_press (GtkMvcController* controller,
+                     GdkDevice       * device,
+                     double            x,
+                     double            y)
+{
+  GtkMvcView* view = gtk_mvc_controller_get_view (controller);
+
+  /* FIXME: think about g_return_val_if_fail (hit_test())??? */
+  if (view && gtk_mvc_view_hit_test (view, x, y))
+    {
+      g_print ("FIXME: toggle the button\n");
+    }
+
+  return FALSE;
+}
+
+static void
+implement_gtk_mvc_controller (GtkMvcControllerIface* iface)
+{
+  iface->handle_button_press = handle_button_press;
+}
 
 GtkMvcController*
 gtk_mvc_button_controller_new (void)
