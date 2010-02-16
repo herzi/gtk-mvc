@@ -38,12 +38,28 @@ G_DEFINE_TYPE_WITH_CODE (GtkMvcScrollView, gtk_scroll_view, GTK_MVC_TYPE_DEFAULT
                          G_IMPLEMENT_INTERFACE (GTK_MVC_TYPE_VIEW, implement_gtk_mvc_view));
 
 static void
+queue_redraw_from_child (GtkMvcView* child,
+                         GtkMvcView* parent)
+{
+  cairo_rectangle_t  position = {0.0, 0.0, 0.0, 0.0};
+  gtk_mvc_view_get_position (child, &position);
+  gtk_mvc_view_queue_redraw (parent, &position);
+}
+
+static void
 gtk_scroll_view_init (GtkMvcScrollView* self)
 {
   PRIV (self) = G_TYPE_INSTANCE_GET_PRIVATE (self, GTK_MVC_TYPE_SCROLL_VIEW, GtkMvcScrollViewPrivate);
 
   PRIV (self)->button_up = gtk_mvc_button_view_new ();
+  gtk_mvc_view_set_model (PRIV (self)->button_up, gtk_mvc_button_model_new ());
+  g_signal_connect (PRIV (self)->button_up, "queue-redraw",
+                    G_CALLBACK (queue_redraw_from_child), self);
+
   PRIV (self)->button_down = gtk_mvc_button_view_new ();
+  gtk_mvc_view_set_model (PRIV (self)->button_down, gtk_mvc_button_model_new ());
+  g_signal_connect (PRIV (self)->button_down, "queue-redraw",
+                    G_CALLBACK (queue_redraw_from_child), self);
 }
 
 static void

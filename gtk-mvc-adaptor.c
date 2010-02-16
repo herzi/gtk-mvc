@@ -27,6 +27,7 @@ struct _GtkMvcAdaptorPrivate
   GdkWindow  * event_window;
   GtkMvcModel* model;
   GtkMvcView * view;
+  guint        view_handler_queue_redraw;
 };
 
 enum
@@ -74,6 +75,8 @@ dispose (GObject* object)
 
   if (PRIV (object)->view)
     {
+      g_signal_handler_disconnect (PRIV (object)->view,
+                                   PRIV (object)->view_handler_queue_redraw);
       g_object_unref (PRIV (object)->view);
       PRIV (object)->view = NULL;
     }
@@ -89,6 +92,14 @@ get_property (GObject   * object,
 {
   g_warning ("%s(%s): unimplemented",
              G_STRFUNC, G_STRLOC);
+}
+
+static void
+queue_redraw_from_view (GtkMvcView   * view,
+                        GtkMvcAdaptor* self)
+{
+  /* FIXME: support partial updates */
+  gtk_widget_queue_draw (GTK_WIDGET (self));
 }
 
 static void
@@ -111,6 +122,8 @@ set_property (GObject     * object,
       g_return_if_fail (!g_value_get_object (value) || GTK_MVC_IS_VIEW (g_value_get_object (value)));
 
       PRIV (object)->view = g_value_dup_object (value);
+      PRIV (object)->view_handler_queue_redraw = g_signal_connect (PRIV (object)->view, "queue-redraw",
+                                                                   G_CALLBACK (queue_redraw_from_view), object);
       g_object_notify (object, "view");
       break;
     default:
