@@ -20,7 +20,8 @@
 
 #include "gtk-mvc-button-model.h"
 
-G_DEFINE_TYPE (GtkMvcButtonModel, gtk_mvc_button_model, G_TYPE_INITIALLY_UNOWNED);
+G_DEFINE_TYPE_WITH_CODE (GtkMvcButtonModel, gtk_mvc_button_model, G_TYPE_INITIALLY_UNOWNED,
+                         G_IMPLEMENT_INTERFACE (GTK_MVC_TYPE_MODEL, NULL));
 
 static void
 gtk_mvc_button_model_init (GtkMvcButtonModel* self)
