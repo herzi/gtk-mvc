@@ -25,13 +25,13 @@ gtk_mvc_model_get_type (void)
 {
   static GType type = 0;
 
-  if (!g_once_init_enter (&type))
+  if (g_once_init_enter (&type))
     {
       GType registered = g_type_register_static_simple (G_TYPE_INTERFACE,
                                                         G_STRINGIFY (GtkMvcModel),
-                                                        sizeof (GtkMvcModelIface), NULL,
-                                                        0, NULL,
-                                                        0);
+                                                        sizeof (GtkMvcModelIface),
+                                                        NULL, 0,
+                                                        NULL, 0);
 
       g_once_init_leave (&type, registered);
     }
