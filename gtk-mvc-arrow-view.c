@@ -20,7 +20,12 @@
 
 #include "gtk-mvc-arrow-view.h"
 
-G_DEFINE_TYPE (GtkMvcArrowView, gtk_mvc_arrow_view, GTK_MVC_TYPE_DEFAULT_VIEW);
+#include "gtk-mvc.h"
+
+static void implement_gtk_mvc_view (GtkMvcViewIface* iface);
+
+G_DEFINE_TYPE_WITH_CODE (GtkMvcArrowView, gtk_mvc_arrow_view, GTK_MVC_TYPE_DEFAULT_VIEW,
+                         G_IMPLEMENT_INTERFACE (GTK_MVC_TYPE_VIEW, implement_gtk_mvc_view));
 
 static void
 gtk_mvc_arrow_view_init (GtkMvcArrowView* self)
@@ -29,6 +34,59 @@ gtk_mvc_arrow_view_init (GtkMvcArrowView* self)
 static void
 gtk_mvc_arrow_view_class_init (GtkMvcArrowViewClass* self_class)
 {}
+
+static void
+paint (GtkMvcView            * view,
+       cairo_t               * context,
+       cairo_rectangle_t     * area,
+       cairo_rectangle_list_t* region)
+{
+  cairo_rectangle_t  position = {0.0, 0.0, 0.0, 0.0};
+  GtkMvcModel      * model = gtk_mvc_view_get_model (view);
+
+  if (!model)
+    {
+      return;
+    }
+
+  gtk_mvc_view_get_position (view, &position);
+
+  cairo_save (context);
+  cairo_translate (context, position.width / 2, position.height / 2);
+  switch (gtk_mvc_arrow_model_get_arrow (GTK_MVC_ARROW_MODEL (model)))
+    {
+    case GTK_ARROW_NONE:
+      break;
+    case GTK_ARROW_RIGHT:
+      cairo_rotate (context, G_PI / 2);
+    case GTK_ARROW_UP:
+      cairo_rotate (context, G_PI / 2);
+    case GTK_ARROW_LEFT:
+      cairo_rotate (context, G_PI / 2);
+    case GTK_ARROW_DOWN:
+      cairo_line_to (context, 0.0, MIN (position.height, position.width) / 2 - 2.0);
+      cairo_rotate (context, 2 * G_PI / 3);
+      cairo_line_to (context, 0.0, MIN (position.height, position.width) / 2);
+      cairo_rotate (context, 2 * G_PI / 3);
+      cairo_line_to (context, 0.0, MIN (position.height, position.width) / 2);
+      cairo_rotate (context, 2 * G_PI / 3);
+      cairo_close_path (context);
+      break;
+    }
+  cairo_restore (context);
+  cairo_set_source_rgb (context,
+                        1.0 / 0xff * 0xee,
+                        1.0 / 0xff * 0xee,
+                        1.0 / 0xff * 0xec);
+  cairo_fill (context);
+  cairo_restore (context);
+}
+
+static void
+implement_gtk_mvc_view (GtkMvcViewIface* iface)
+{
+  iface->paint = paint;
+}
 
 GtkMvcView*
 gtk_mvc_arrow_view_new_with_model (GtkMvcModel* model)
