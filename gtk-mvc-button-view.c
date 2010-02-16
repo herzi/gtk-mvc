@@ -69,16 +69,27 @@ paint (GtkMvcView            * view,
        cairo_rectangle_list_t* region)
 {
   cairo_rectangle_t  position;
+  GtkMvcModel      * model = gtk_mvc_view_get_model (view);
 
   gtk_mvc_view_get_position (view, &position);
   cairo_set_line_width (context, 1.0);
   cairo_rectangle (context,
                    0.5, 0.5,
                    position.width - 1.0, position.height - 1.0);
-  cairo_set_source_rgb (context,
-                        1.0 / 0xff * 0x20,
-                        1.0 / 0xff * 0x4a,
-                        1.0 / 0xff * 0x87);
+  if (GTK_MVC_IS_BUTTON_MODEL (model) && gtk_mvc_button_model_get_pushed (GTK_MVC_BUTTON_MODEL (model)))
+    {
+      cairo_set_source_rgb (context,
+                            1.0 / 0xff * 0x20,
+                            1.0 / 0xff * 0x4a,
+                            1.0 / 0xff * 0x87);
+    }
+  else
+    {
+      cairo_set_source_rgb (context,
+                            1.0 / 0xff * 0x34,
+                            1.0 / 0xff * 0x65,
+                            1.0 / 0xff * 0xa4);
+    }
   cairo_fill_preserve (context);
   cairo_set_source_rgb (context,
                         1.0 / 0xff * 0x72,
@@ -88,15 +99,41 @@ paint (GtkMvcView            * view,
 }
 
 static void
+update_from_model (GtkMvcModel* model,
+                   GtkMvcView * view)
+{
+  cairo_rectangle_t  position;
+
+  gtk_mvc_view_get_position (view, &position);
+
+  gtk_mvc_view_queue_redraw (view, &position);
+}
+
+static void
 set_model (GtkMvcView * view,
            GtkMvcModel* model)
 {
+  GtkMvcModel* old_model;
+
   if (model && !GTK_MVC_IS_BUTTON_MODEL (model))
     {
       return;
     }
 
+  old_model = gtk_mvc_view_get_model (view);
+  if (old_model)
+    {
+      /* FIXME: store the signal handler id */
+      g_signal_handlers_disconnect_by_func (model, update_from_model, view);
+    }
+
   gtk_mvc_view_parent_iface->set_model (view, model);
+
+  if (model)
+    {
+      g_signal_connect (model, "update",
+                        G_CALLBACK (update_from_model), view);
+    }
 }
 
 static void
