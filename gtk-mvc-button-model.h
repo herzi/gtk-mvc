@@ -36,8 +36,11 @@ typedef struct _GtkMvcButtonModelPrivate GtkMvcButtonModelPrivate;
 #define GTK_MVC_IS_BUTTON_MODEL_CLASS(c)  (G_TYPE_CHECK_CLASS_TYPE ((c), GTK_MVC_TYPE_BUTTON_MODEL))
 #define GTK_MVC_BUTTON_MODEL_GET_CLASS(i) (G_TYPE_INSTANCE_GET_CLASS ((i), GTK_MVC_TYPE_BUTTON_MODEL, GtkMvcButtonModelClass))
 
-GType        gtk_mvc_button_model_get_type (void);
-GtkMvcModel* gtk_mvc_button_model_new      (void);
+GType        gtk_mvc_button_model_get_type   (void);
+GtkMvcModel* gtk_mvc_button_model_new        (void);
+gboolean     gtk_mvc_button_model_get_pushed (GtkMvcButtonModel* self);
+void         gtk_mvc_button_model_set_pushed (GtkMvcButtonModel* self,
+                                              gboolean           pushed);
 
 struct _GtkMvcButtonModel
 {
