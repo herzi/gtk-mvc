@@ -44,7 +44,16 @@ handle_button_press (GtkMvcController* controller,
   /* FIXME: think about g_return_val_if_fail (hit_test())??? */
   if (view && gtk_mvc_view_hit_test (view, x, y))
     {
-      g_print ("FIXME: toggle the button\n");
+      GtkMvcModel* model = gtk_mvc_view_get_model (view);
+
+      if (model)
+        {
+          gtk_mvc_button_model_set_pushed (model, TRUE);
+
+          /* FIXME: grab the pointer and wait for release */
+
+          return TRUE;
+        }
     }
 
   return FALSE;
