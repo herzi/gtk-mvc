@@ -21,6 +21,37 @@
 #ifndef GTK_MVC_ARROW_MODEL_H
 #define GTK_MVC_ARROW_MODEL_H
 
+#include <gtk/gtk.h>
+#include "gtk-mvc-model.h"
+
+G_BEGIN_DECLS
+
+typedef struct _GtkMvcArrowModel        GtkMvcArrowModel;
+typedef struct _GtkMvcArrowModelClass   GtkMvcArrowModelClass;
+typedef struct _GtkMvcArrowModelPrivate GtkMvcArrowModelPrivate;
+
+#define GTK_MVC_TYPE_ARROW_MODEL         (gtk_mvc_arrow_model_get_type ())
+#define GTK_MVC_ARROW_MODEL(i)           (G_TYPE_CHECK_INSTANCE_CAST ((i), GTK_MVC_TYPE_ARROW_MODEL, GtkMvcArrowModel))
+#define GTK_MVC_ARROW_MODEL_CLASS(c)     (G_TYPE_CHECK_CLASS_CAST ((c), GTK_MVC_TYPE_ARROW_MODEL, GtkMvcArrowModelClass))
+#define GTK_MVC_IS_ARROW_MODEL(i)        (G_TYPE_CHECK_INSTANCE_TYPE ((i), GTK_MVC_TYPE_ARROW_MODEL))
+#define GTK_MVC_IS_ARROW_MODEL_CLASS(c)  (G_TYPE_CHECK_CLASS_TYPE ((c), GTK_MVC_TYPE_ARROW_MODEL))
+#define GTK_MVC_ARROW_MODEL_GET_CLASS(i) (G_TYPE_INSTANCE_GET_CLASS ((i), GTK_MVC_TYPE_ARROW_MODEL, GtkMvcArrowModelClass))
+
+GType        gtk_mvc_arrow_model_get_type (void);
+GtkMvcModel* gtk_mvc_arrow_model_new      (GtkArrowType  arrow);
+
+struct _GtkMvcArrowModel
+{
+  GInitiallyUnowned        base_instance;
+  GtkMvcArrowModelPrivate* _private;
+};
+
+struct _GtkMvcArrowModelClass
+{
+  GInitiallyUnownedClass   base_class;
+};
+
+G_END_DECLS
 
 #endif /* !GTK_MVC_ARROW_MODEL_H */
 
