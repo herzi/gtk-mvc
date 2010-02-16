@@ -20,6 +20,8 @@
 
 #include "gtk-mvc-button-controller.h"
 
+#include "gtk-mvc.h"
+
 static void implement_gtk_mvc_controller (GtkMvcControllerIface* iface);
 
 G_DEFINE_TYPE_WITH_CODE (GtkMvcButtonController, gtk_mvc_button_controller, GTK_MVC_TYPE_DEFAULT_CONTROLLER,
