@@ -122,8 +122,11 @@ set_property (GObject     * object,
       g_return_if_fail (!g_value_get_object (value) || GTK_MVC_IS_VIEW (g_value_get_object (value)));
 
       PRIV (object)->view = g_value_dup_object (value);
-      PRIV (object)->view_handler_queue_redraw = g_signal_connect (PRIV (object)->view, "queue-redraw",
-                                                                   G_CALLBACK (queue_redraw_from_view), object);
+      if (PRIV (object)->view)
+        {
+          PRIV (object)->view_handler_queue_redraw = g_signal_connect (PRIV (object)->view, "queue-redraw",
+                                                                       G_CALLBACK (queue_redraw_from_view), object);
+        }
       g_object_notify (object, "view");
       break;
     default:
