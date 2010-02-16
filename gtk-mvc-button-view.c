@@ -22,6 +22,13 @@
 
 #include "gtk-mvc.h"
 
+struct _GtkMvcButtonViewPrivate
+{
+  GtkMvcView* child;
+};
+
+#define PRIV(i) (((GtkMvcButtonView*)(i))->_private)
+
 static GtkMvcViewIface* gtk_mvc_view_parent_iface = NULL;
 
 static void implement_gtk_mvc_view (GtkMvcViewIface* iface);
@@ -31,11 +38,27 @@ G_DEFINE_TYPE_WITH_CODE (GtkMvcButtonView, gtk_mvc_button_view, GTK_MVC_TYPE_DEF
 
 static void
 gtk_mvc_button_view_init (GtkMvcButtonView* self)
-{}
+{
+  PRIV (self) = G_TYPE_INSTANCE_GET_PRIVATE (self, GTK_MVC_TYPE_BUTTON_VIEW, GtkMvcButtonViewPrivate);
+}
+
+static void
+dispose (GObject* object)
+{
+  gtk_mvc_button_view_set_child (GTK_MVC_BUTTON_VIEW (object), NULL);
+
+  G_OBJECT_CLASS (gtk_mvc_button_view_parent_class)->dispose (object);
+}
 
 static void
 gtk_mvc_button_view_class_init (GtkMvcButtonViewClass* self_class)
-{}
+{
+  GObjectClass* object_class = G_OBJECT_CLASS (self_class);
+
+  object_class->dispose = dispose;
+
+  g_type_class_add_private (self_class, sizeof (GtkMvcButtonViewPrivate));
+}
 
 static GtkMvcController*
 create_default_controller (GtkMvcView* view)
@@ -145,6 +168,32 @@ implement_gtk_mvc_view (GtkMvcViewIface* iface)
   iface->hit_test                  = hit_test;
   iface->paint                     = paint;
   iface->set_model                 = set_model;
+}
+
+void
+gtk_mvc_button_view_set_child (GtkMvcButtonView* self,
+                               GtkMvcView      * child)
+{
+  g_return_if_fail (GTK_MVC_IS_BUTTON_VIEW (self));
+  g_return_if_fail (!child || GTK_MVC_IS_VIEW (child));
+
+  if (PRIV (self)->child == child)
+    {
+      return;
+    }
+
+  if (PRIV (self)->child)
+    {
+      /* FIXME: disconnect from the child */
+      g_object_unref (PRIV (self)->child);
+      PRIV (self)->child = NULL;
+    }
+
+  if (child)
+    {
+      PRIV (self)->child = g_object_ref_sink (child);
+      /* FIXME: connect to the child */
+    }
 }
 
 GtkMvcView*

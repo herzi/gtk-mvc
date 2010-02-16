@@ -36,8 +36,10 @@ typedef struct _GtkMvcButtonViewPrivate GtkMvcButtonViewPrivate;
 #define GTK_MVC_IS_BUTTON_VIEW_CLASS(c)  (G_TYPE_CHECK_CLASS_TYPE ((c), GTK_MVC_TYPE_BUTTON_VIEW))
 #define GTK_MVC_BUTTON_VIEW_GET_CLASS(i) (G_TYPE_INSTANCE_GET_CLASS ((i), GTK_MVC_TYPE_BUTTON_VIEW, GtkMvcButtonViewClass))
 
-GType       gtk_mvc_button_view_get_type (void);
-GtkMvcView* gtk_mvc_button_view_new      (void);
+GType       gtk_mvc_button_view_get_type  (void);
+GtkMvcView* gtk_mvc_button_view_new       (void);
+void        gtk_mvc_button_view_set_child (GtkMvcButtonView* self,
+                                           GtkMvcView      * child);
 
 struct _GtkMvcButtonView
 {
