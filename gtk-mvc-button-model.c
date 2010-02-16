@@ -45,7 +45,7 @@ gtk_mvc_button_model_class_init (GtkMvcButtonModelClass* self_class)
 gboolean
 gtk_mvc_button_model_get_pushed (GtkMvcButtonModel* self)
 {
-  g_return_if_fail (GTK_MVC_IS_BUTTON_MODEL (self));
+  g_return_val_if_fail (GTK_MVC_IS_BUTTON_MODEL (self), FALSE);
 
   return PRIV (self)->pushed;
 }
