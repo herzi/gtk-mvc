@@ -21,6 +21,36 @@
 #ifndef GTK_MVC_ARROW_VIEW_H
 #define GTK_MVC_ARROW_VIEW_H
 
+#include "gtk-mvc-default-view.h"
+
+G_BEGIN_DECLS
+
+typedef struct _GtkMvcArrowView        GtkMvcArrowView;
+typedef struct _GtkMvcArrowViewClass   GtkMvcArrowViewClass;
+typedef struct _GtkMvcArrowViewPrivate GtkMvcArrowViewPrivate;
+
+#define GTK_MVC_TYPE_ARROW_VIEW         (gtk_mvc_arrow_view_get_type ())
+#define GTK_MVC_ARROW_VIEW(i)           (G_TYPE_CHECK_INSTANCE_CAST ((i), GTK_MVC_TYPE_ARROW_VIEW, GtkMvcArrowView))
+#define GTK_MVC_ARROW_VIEW_CLASS(c)     (G_TYPE_CHECK_CLASS_CAST ((c), GTK_MVC_TYPE_ARROW_VIEW, GtkMvcArrowViewClass))
+#define GTK_MVC_IS_ARROW_VIEW(i)        (G_TYPE_CHECK_INSTANCE_TYPE ((i), GTK_MVC_TYPE_ARROW_VIEW))
+#define GTK_MVC_IS_ARROW_VIEW_CLASS(c)  (G_TYPE_CHECK_CLASS_TYPE ((c), GTK_MVC_TYPE_ARROW_VIEW))
+#define GTK_MVC_ARROW_VIEW_GET_CLASS(i) (G_TYPE_INSTANCE_GET_CLASS ((i), GTK_MVC_TYPE_ARROW_VIEW, GtkMvcArrowViewClass))
+
+GType       gtk_mvc_arrow_view_get_type       (void);
+GtkMvcView* gtk_mvc_arrow_view_new_with_model (GtkMvcModel* model);
+
+struct _GtkMvcArrowView
+{
+  GtkMvcDefaultView       base_instance;
+  GtkMvcArrowViewPrivate* _private;
+};
+
+struct _GtkMvcArrowViewClass
+{
+  GtkMvcDefaultViewClass  base_class;
+};
+
+G_END_DECLS
 
 #endif /* !GTK_MVC_ARROW_VIEW_H */
 

@@ -20,5 +20,26 @@
 
 #include "gtk-mvc-arrow-view.h"
 
+G_DEFINE_TYPE (GtkMvcArrowView, gtk_mvc_arrow_view, GTK_MVC_TYPE_DEFAULT_VIEW);
+
+static void
+gtk_mvc_arrow_view_init (GtkMvcArrowView* self)
+{}
+
+static void
+gtk_mvc_arrow_view_class_init (GtkMvcArrowViewClass* self_class)
+{}
+
+GtkMvcView*
+gtk_mvc_arrow_view_new_with_model (GtkMvcModel* model)
+{
+  GtkMvcView* result = g_object_new (GTK_MVC_TYPE_ARROW_VIEW,
+                                     NULL);
+
+  /* FIXME: turn into a property */
+  gtk_mvc_view_set_model (result, model);
+
+  return result;
+}
 
 /* vim:set et sw=2 cino=t0,f0,(0,{s,>2s,n-1s,^-1s,e2s: */
