@@ -114,6 +114,14 @@ paint (GtkMvcView            * view,
                             1.0 / 0xff * 0xa4);
     }
   cairo_fill_preserve (context);
+  if (PRIV (view)->child)
+    {
+      cairo_save (context);
+      cairo_new_path (context);
+      gtk_mvc_view_paint (PRIV (view)->child, context,
+                          area, region);
+      cairo_restore (context);
+    }
   cairo_set_source_rgb (context,
                         1.0 / 0xff * 0x72,
                         1.0 / 0xff * 0x9f,
@@ -160,6 +168,48 @@ set_model (GtkMvcView * view,
 }
 
 static void
+set_position (GtkMvcView       * view,
+              cairo_rectangle_t* position)
+{
+  gtk_mvc_view_parent_iface->set_position (view, position);
+
+  if (PRIV (view)->child)
+    {
+      cairo_rectangle_t  child_position;
+
+      /* FIXME: make the border width themable */
+      /* FIXME: check child requisition */
+      if (position->width >= 1.0 + 2 * 2.0) /*min-size + 2*border*/
+        {
+          child_position.x = 2.0;
+          child_position.width = position->width - 2 * 2.0;
+        }
+      else
+        {
+          g_warning ("%s(%s): FIXME: implement horizontal scaling",
+                     G_STRFUNC, G_STRLOC);
+          child_position.x = 0.0;
+          child_position.width = position->width;
+        }
+
+      if (position->height >= 1.0 + 2 * 2.0)
+        {
+          child_position.y = 2.0;
+          child_position.height = position->height - 2 * 2.0;
+        }
+      else
+        {
+          g_warning ("%s(%s): FIXME: implement vertical scaling",
+                     G_STRFUNC, G_STRLOC);
+          child_position.y = 0.0;
+          child_position.height = position->height;
+        }
+
+      gtk_mvc_view_set_position (PRIV (view)->child, &child_position);
+    }
+}
+
+static void
 implement_gtk_mvc_view (GtkMvcViewIface* iface)
 {
   gtk_mvc_view_parent_iface = g_type_interface_peek_parent (iface);
@@ -168,6 +218,7 @@ implement_gtk_mvc_view (GtkMvcViewIface* iface)
   iface->hit_test                  = hit_test;
   iface->paint                     = paint;
   iface->set_model                 = set_model;
+  iface->set_position              = set_position;
 }
 
 void
