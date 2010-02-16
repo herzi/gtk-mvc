@@ -48,9 +48,9 @@ handle_button_press (GtkMvcController* controller,
     {
       GtkMvcModel* model = gtk_mvc_view_get_model (view);
 
-      if (model)
+      if (GTK_MVC_IS_BUTTON_MODEL (model))
         {
-          gtk_mvc_button_model_set_pushed (model, TRUE);
+          gtk_mvc_button_model_set_pushed (GTK_MVC_BUTTON_MODEL (model), TRUE);
 
           /* FIXME: grab the pointer and wait for release */
 
@@ -74,9 +74,9 @@ handle_button_release (GtkMvcController* controller,
     {
       GtkMvcModel* model = gtk_mvc_view_get_model (view);
 
-      if (model)
+      if (GTK_MVC_IS_BUTTON_MODEL (model))
         {
-          gtk_mvc_button_model_set_pushed (model, FALSE);
+          gtk_mvc_button_model_set_pushed (GTK_MVC_BUTTON_MODEL (model), FALSE);
 
           return TRUE;
         }

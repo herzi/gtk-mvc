@@ -44,7 +44,7 @@ gtk_mvc_controller_get_view (GtkMvcController* self)
 {
   GtkMvcControllerIface* iface;
 
-  g_return_if_fail (GTK_MVC_IS_CONTROLLER (self));
+  g_return_val_if_fail (GTK_MVC_IS_CONTROLLER (self), NULL);
 
   iface = GTK_MVC_CONTROLLER_GET_IFACE (self);
   if (!iface->get_view)
@@ -67,8 +67,8 @@ gtk_mvc_controller_handle_button_press (GtkMvcController* self,
 {
   GtkMvcControllerIface* iface;
 
-  g_return_if_fail (GTK_MVC_IS_CONTROLLER (self));
-  g_return_if_fail (GDK_IS_DEVICE (device));
+  g_return_val_if_fail (GTK_MVC_IS_CONTROLLER (self), FALSE);
+  g_return_val_if_fail (GDK_IS_DEVICE (device), FALSE);
 
   iface = GTK_MVC_CONTROLLER_GET_IFACE (self);
 
@@ -92,8 +92,8 @@ gtk_mvc_controller_handle_button_release (GtkMvcController* self,
 {
   GtkMvcControllerIface* iface;
 
-  g_return_if_fail (GTK_MVC_IS_CONTROLLER (self));
-  g_return_if_fail (GDK_IS_DEVICE (device));
+  g_return_val_if_fail (GTK_MVC_IS_CONTROLLER (self), FALSE);
+  g_return_val_if_fail (GDK_IS_DEVICE (device), FALSE);
 
   iface = GTK_MVC_CONTROLLER_GET_IFACE (self);
 

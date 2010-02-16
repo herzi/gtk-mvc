@@ -95,7 +95,7 @@ test_scroll_view_paint (void)
           1
   };
   GtkMvcView            * view = gtk_mvc_scroll_view_new ();
-  cairo_t               * context;
+  cairo_t               * context = cairo_create (NULL);
   g_object_ref_sink (view);
 
   gtk_mvc_view_set_position (view, &position);
@@ -103,6 +103,7 @@ test_scroll_view_paint (void)
   /* FIXME: make sure something was drawn */
 
   g_object_unref (view);
+  cairo_destroy (context);
 }
 
 int

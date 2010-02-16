@@ -1,4 +1,4 @@
-CCFLAGS=$(shell pkg-config --cflags gtk+-2.0)
+CCFLAGS=$(shell pkg-config --cflags gtk+-2.0) -Wall -Werror-implicit-function-declaration  -Wimplicit-int -Werror
 LDFLAGS=$(shell pkg-config --libs gtk+-2.0)
 CCLDFLAGS=$(CCFLAGS) $(LDFLAGS)
 
