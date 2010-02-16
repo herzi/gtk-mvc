@@ -22,6 +22,7 @@
 #define GTK_MVC_VIEW_H
 
 #include <cairo.h>
+#include "gtk-mvc-model.h"
 #include "gtk-mvc-primitives.h"
 
 typedef struct _GtkMvcView      GtkMvcView;
@@ -54,6 +55,8 @@ void              gtk_mvc_view_query_size             (GtkMvcView            * s
 void              gtk_mvc_view_set_controller         (GtkMvcView            * self,
                                                        GtkMvcController      * controller);
 void              gtk_mvc_view_set_default_controller (GtkMvcView            * self);
+void              gtk_mvc_view_set_model              (GtkMvcView            * self,
+                                                       GtkMvcModel           * model);
 void              gtk_mvc_view_set_position           (GtkMvcView            * self,
                                                        cairo_rectangle_t     * position);
 
@@ -78,6 +81,8 @@ struct _GtkMvcViewIface
                                                   gtk_mvc_size_t        * size);
   void              (*set_controller)            (GtkMvcView            * self,
                                                   GtkMvcController      * controller);
+  void              (*set_model)                 (GtkMvcView            * self,
+                                                  GtkMvcModel           * model);
   void              (*set_position)              (GtkMvcView            * self,
                                                   cairo_rectangle_t     * rectangle);
 };

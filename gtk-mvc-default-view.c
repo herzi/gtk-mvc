@@ -26,6 +26,7 @@ struct _GtkMvcDefaultViewPrivate
 {
   cairo_rectangle_t  position;
   GtkMvcController * controller;
+  GtkMvcModel      * model;
 };
 
 #define PRIV(i) (((GtkMvcDefaultView*)(i))->_private)
@@ -60,7 +61,10 @@ constructed (GObject* object)
 static void
 dispose (GObject* object)
 {
-  gtk_mvc_view_set_controller (GTK_MVC_VIEW (object), NULL);
+  GtkMvcView* view = GTK_MVC_VIEW (object);
+
+  gtk_mvc_view_set_controller (view, NULL);
+  gtk_mvc_view_set_model (view, NULL);
 
   G_OBJECT_CLASS (gtk_mvc_default_view_parent_class)->dispose (object);
 }
@@ -124,6 +128,28 @@ set_controller (GtkMvcView      * view,
 }
 
 static void
+set_model (GtkMvcView * view,
+           GtkMvcModel* model)
+{
+  if (PRIV (view)->model == model)
+    {
+      /* FIXME: test this */
+      return;
+    }
+
+  if (PRIV (view)->model)
+    {
+      g_object_unref (PRIV (view)->model);
+      PRIV (view)->model = NULL;
+    }
+
+  if (model)
+    {
+      PRIV (view)->model = g_object_ref_sink (model);
+    }
+}
+
+static void
 set_position (GtkMvcView       * view,
               cairo_rectangle_t* position)
 {
@@ -139,6 +165,7 @@ implement_gtk_mvc_view (GtkMvcViewIface* iface)
   iface->get_controller            = get_controller;
   iface->get_position              = get_position;
   iface->set_controller            = set_controller;
+  iface->set_model                 = set_model;
   iface->set_position              = set_position;
 }
 

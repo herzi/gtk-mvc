@@ -245,6 +245,28 @@ gtk_mvc_view_set_default_controller (GtkMvcView* self)
 }
 
 void
+gtk_mvc_view_set_model (GtkMvcView * self,
+                        GtkMvcModel* model)
+{
+  GtkMvcViewIface* iface;
+
+  g_return_if_fail (GTK_MVC_IS_VIEW (self));
+  g_return_if_fail (!model || GTK_MVC_IS_MODEL (model));
+
+  iface = GTK_MVC_VIEW_GET_IFACE (self);
+  if (!iface->set_model)
+    {
+      g_warning ("%s(%s): the type %s doesn't implement GtkMvcViewIface->set_model()",
+                 G_STRFUNC, G_STRLOC,
+                 G_OBJECT_TYPE_NAME (self));
+    }
+  else
+    {
+      iface->set_model (self, model);
+    }
+}
+
+void
 gtk_mvc_view_set_position (GtkMvcView       * self,
                            cairo_rectangle_t* position)
 {

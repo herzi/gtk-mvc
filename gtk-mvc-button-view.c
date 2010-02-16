@@ -22,6 +22,8 @@
 
 #include "gtk-mvc.h"
 
+static GtkMvcViewIface* gtk_mvc_view_parent_iface = NULL;
+
 static void implement_gtk_mvc_view (GtkMvcViewIface* iface);
 
 G_DEFINE_TYPE_WITH_CODE (GtkMvcButtonView, gtk_mvc_button_view, GTK_MVC_TYPE_DEFAULT_VIEW,
@@ -86,11 +88,26 @@ paint (GtkMvcView            * view,
 }
 
 static void
+set_model (GtkMvcView * view,
+           GtkMvcModel* model)
+{
+  if (model && !GTK_MVC_IS_BUTTON_MODEL (model))
+    {
+      return;
+    }
+
+  gtk_mvc_view_parent_iface->set_model (view, model);
+}
+
+static void
 implement_gtk_mvc_view (GtkMvcViewIface* iface)
 {
+  gtk_mvc_view_parent_iface = g_type_interface_peek_parent (iface);
+
   iface->create_default_controller = create_default_controller;
   iface->hit_test                  = hit_test;
   iface->paint                     = paint;
+  iface->set_model                 = set_model;
 }
 
 GtkMvcView*
