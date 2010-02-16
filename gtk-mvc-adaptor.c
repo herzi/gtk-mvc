@@ -154,6 +154,28 @@ button_press_event (GtkWidget     * widget,
   return handled;
 }
 
+static gboolean
+button_release_event (GtkWidget     * widget,
+                      GdkEventButton* event)
+{
+  gboolean handled = FALSE;
+
+  if (PRIV (widget)->view)
+    {
+      GtkMvcController* controller = gtk_mvc_view_get_controller (PRIV (widget)->view);
+
+      if (controller)
+        {
+          handled = gtk_mvc_controller_handle_button_release (controller,
+                                                              event->device,
+                                                              event->x,
+                                                              event->y);
+        }
+    }
+
+  return handled;
+}
+
 static void
 map (GtkWidget* widget)
 {
@@ -297,14 +319,15 @@ gtk_mvc_adaptor_class_init (GtkMvcAdaptorClass* self_class)
                                                         G_TYPE_OBJECT,
                                                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
-  widget_class->button_press_event  = button_press_event;
-  widget_class->expose_event        = expose_event;
-  widget_class->map                 = map;
-  widget_class->realize             = realize;
-  widget_class->size_allocate       = size_allocate;
-  widget_class->size_request        = size_request;
-  widget_class->unmap               = unmap;
-  widget_class->unrealize           = unrealize;
+  widget_class->button_press_event   = button_press_event;
+  widget_class->button_release_event = button_release_event;
+  widget_class->expose_event         = expose_event;
+  widget_class->map                  = map;
+  widget_class->realize              = realize;
+  widget_class->size_allocate        = size_allocate;
+  widget_class->size_request         = size_request;
+  widget_class->unmap                = unmap;
+  widget_class->unrealize            = unrealize;
 
   g_type_class_add_private (self_class, sizeof (GtkMvcAdaptorPrivate));
 }

@@ -59,10 +59,35 @@ handle_button_press (GtkMvcController* controller,
   return FALSE;
 }
 
+static gboolean
+handle_button_release (GtkMvcController* controller,
+                       GdkDevice       * device,
+                       double            x,
+                       double            y)
+{
+  GtkMvcView* view = gtk_mvc_controller_get_view (controller);
+
+  /* FIXME: think about g_return_val_if_fail (hit_test())??? */
+  if (view && gtk_mvc_view_hit_test (view, x, y))
+    {
+      GtkMvcModel* model = gtk_mvc_view_get_model (view);
+
+      if (model)
+        {
+          gtk_mvc_button_model_set_pushed (model, FALSE);
+
+          return TRUE;
+        }
+    }
+
+  return FALSE;
+}
+
 static void
 implement_gtk_mvc_controller (GtkMvcControllerIface* iface)
 {
-  iface->handle_button_press = handle_button_press;
+  iface->handle_button_press   = handle_button_press;
+  iface->handle_button_release = handle_button_release;
 }
 
 GtkMvcController*

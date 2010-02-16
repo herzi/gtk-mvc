@@ -70,10 +70,48 @@ handle_button_press (GtkMvcController* controller,
   return FALSE;
 }
 
+static gboolean
+handle_button_release (GtkMvcController* controller,
+                     GdkDevice       * device,
+                     double            x,
+                     double            y)
+{
+  GtkMvcView* view = gtk_mvc_controller_get_view (controller);
+
+  if (view)
+    {
+      GList* children = gtk_mvc_view_enumerate_children (view);
+      GList* child;
+
+      gboolean handled = FALSE;
+
+      for (child = children; child && !handled; child = child->next)
+        {
+          GtkMvcController* controller = gtk_mvc_view_get_controller (child->data);
+
+          if (controller)
+            {
+              /* FIXME: maybe translate coordinates? */
+              handled = gtk_mvc_controller_handle_button_release (controller, device, x, y);
+            }
+        }
+
+      g_list_free (children);
+
+      if (!handled)
+        {
+          /* FIXME: ignore right now */
+        }
+    }
+
+  return FALSE;
+}
+
 static void
 implement_gtk_mvc_controller (GtkMvcControllerIface* iface)
 {
-  iface->handle_button_press = handle_button_press;
+  iface->handle_button_press   = handle_button_press;
+  iface->handle_button_release = handle_button_release;
 }
 
 /* vim:set et sw=2 cino=t0,f0,(0,{s,>2s,n-1s,^-1s,e2s: */

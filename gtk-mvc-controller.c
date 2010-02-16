@@ -80,10 +80,33 @@ gtk_mvc_controller_handle_button_press (GtkMvcController* self,
 
       return FALSE;
     }
-  else
+
+  return iface->handle_button_press (self, device, x, y);
+}
+
+gboolean
+gtk_mvc_controller_handle_button_release (GtkMvcController* self,
+                                          GdkDevice       * device,
+                                          double            x,
+                                          double            y)
+{
+  GtkMvcControllerIface* iface;
+
+  g_return_if_fail (GTK_MVC_IS_CONTROLLER (self));
+  g_return_if_fail (GDK_IS_DEVICE (device));
+
+  iface = GTK_MVC_CONTROLLER_GET_IFACE (self);
+
+  if (!iface->handle_button_release)
     {
-      return iface->handle_button_press (self, device, x, y);
+      g_warning ("%s(%s): the type %s doesn't implement GtkMvcControllerIface->handle_button_release",
+                 G_STRFUNC, G_STRLOC,
+                 G_OBJECT_TYPE_NAME (self));
+
+      return FALSE;
     }
+
+  return iface->handle_button_release (self, device, x, y);
 }
 
 void
