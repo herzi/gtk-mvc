@@ -20,6 +20,15 @@
 
 #include "gtk-mvc-model.h"
 
+enum {
+        UPDATED,
+        N_SIGNALS
+};
+
+static void  gtk_mvc_model_iface_init (GtkMvcModelIface* iface);
+
+static guint signals[N_SIGNALS] = {0};
+
 GType
 gtk_mvc_model_get_type (void)
 {
@@ -30,13 +39,32 @@ gtk_mvc_model_get_type (void)
       GType registered = g_type_register_static_simple (G_TYPE_INTERFACE,
                                                         G_STRINGIFY (GtkMvcModel),
                                                         sizeof (GtkMvcModelIface),
-                                                        NULL, 0,
+                                                        (GClassInitFunc) gtk_mvc_model_iface_init, 0,
                                                         NULL, 0);
 
       g_once_init_leave (&type, registered);
     }
 
   return type;
+}
+
+static void
+gtk_mvc_model_iface_init (GtkMvcModelIface* iface)
+{
+  signals[UPDATED] = g_signal_new ("update",
+                                   G_TYPE_FROM_INTERFACE (iface),
+                                   G_SIGNAL_ACTION, 0,
+                                   NULL, NULL,
+                                   g_cclosure_marshal_VOID__VOID,
+                                   G_TYPE_NONE, 0);
+}
+
+void
+gtk_mvc_model_updated (GtkMvcModel* model)
+{
+  g_return_if_fail (GTK_MVC_IS_MODEL (model));
+
+  g_signal_emit (model, signals[UPDATED], 0);
 }
 
 /* vim:set et sw=2 cino=t0,f0,(0,{s,>2s,n-1s,^-1s,e2s: */

@@ -34,6 +34,7 @@ typedef struct _GtkMvcModelIface GtkMvcModelIface;
 #define GTK_MVC_MODEL_GET_IFACE(i) (G_TYPE_INSTANCE_GET_INTERFACE ((i), GTK_MVC_TYPE_MODEL, GtkMvcModelIface))
 
 GType gtk_mvc_model_get_type (void);
+void  gtk_mvc_model_updated  (GtkMvcModel* model);
 
 struct _GtkMvcModelIface
 {
