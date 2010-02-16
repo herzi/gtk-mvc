@@ -40,6 +40,7 @@ G_BEGIN_DECLS
 
 GType             gtk_mvc_view_get_type               (void);
 GtkMvcController* gtk_mvc_view_get_controller         (GtkMvcView            * self);
+GtkMvcModel*      gtk_mvc_view_get_model              (GtkMvcView            * self);
 void              gtk_mvc_view_get_position           (GtkMvcView            * self,
                                                        cairo_rectangle_t     * position);
 GList*            gtk_mvc_view_enumerate_children     (GtkMvcView            * self);
@@ -52,6 +53,8 @@ void              gtk_mvc_view_paint                  (GtkMvcView            * s
                                                        cairo_rectangle_list_t* region);
 void              gtk_mvc_view_query_size             (GtkMvcView            * self,
                                                        gtk_mvc_size_t        * size);
+void              gtk_mvc_view_queue_redraw           (GtkMvcView            * self,
+                                                       cairo_rectangle_t     * rectangle);
 void              gtk_mvc_view_set_controller         (GtkMvcView            * self,
                                                        GtkMvcController      * controller);
 void              gtk_mvc_view_set_default_controller (GtkMvcView            * self);
@@ -68,6 +71,7 @@ struct _GtkMvcViewIface
   GtkMvcController* (*create_default_controller) (GtkMvcView            * self);
   GList*            (*enumerate_children)        (GtkMvcView            * self);
   GtkMvcController* (*get_controller)            (GtkMvcView            * self);
+  GtkMvcModel*      (*get_model)                 (GtkMvcView            * self);
   void              (*get_position)              (GtkMvcView            * self,
                                                   cairo_rectangle_t     * position);
   gboolean          (*hit_test)                  (GtkMvcView            * self,

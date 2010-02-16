@@ -20,6 +20,16 @@
 
 #include "gtk-mvc-view.h"
 
+enum
+{
+  QUEUE_REDRAW,
+  N_SIGNALS
+};
+
+static void gtk_mvc_view_iface_init (GtkMvcViewIface* iface);
+
+static gint signals[N_SIGNALS] = {0};
+
 GType
 gtk_mvc_view_get_type (void)
 {
@@ -27,21 +37,26 @@ gtk_mvc_view_get_type (void)
 
   if (g_once_init_enter (&type))
     {
-      GTypeInfo  info = {
-              sizeof (GtkMvcViewIface),
-              NULL, NULL,
-              NULL, NULL, NULL,
-              0, 0, NULL,
-              NULL
-      };
-      GType registered = g_type_register_static (G_TYPE_INTERFACE,
-                                                 G_STRINGIFY (GtkMvcView),
-                                                 &info,
-                                                 0);
+      GType registered = g_type_register_static_simple (G_TYPE_INTERFACE,
+                                                        G_STRINGIFY (GtkMvcView),
+                                                        sizeof (GtkMvcViewIface),
+                                                        (GClassInitFunc)gtk_mvc_view_iface_init,
+                                                        0, NULL, 0);
       g_once_init_leave (&type, registered);
     }
 
   return type;
+}
+
+static void
+gtk_mvc_view_iface_init (GtkMvcViewIface* iface)
+{
+  signals[QUEUE_REDRAW] = g_signal_new ("queue-redraw",
+                                        G_TYPE_FROM_INTERFACE (iface),
+                                        G_SIGNAL_ACTION, 0,
+                                        NULL, NULL,
+                                        g_cclosure_marshal_VOID__VOID,
+                                        G_TYPE_NONE, 0);
 }
 
 GList*
@@ -80,6 +95,26 @@ gtk_mvc_view_get_controller (GtkMvcView* self)
     }
 
   return iface->get_controller (self);
+}
+
+GtkMvcModel*
+gtk_mvc_view_get_model (GtkMvcView* self)
+{
+  GtkMvcViewIface* iface;
+
+  g_return_val_if_fail (GTK_MVC_IS_VIEW (self), NULL);
+
+  iface = GTK_MVC_VIEW_GET_IFACE (self);
+  if (!iface->get_model)
+    {
+      g_warning ("%s(%s): the type %s doesn't implement GtkMvcViewIface->get_model()",
+                 G_STRLOC, G_STRFUNC,
+                 G_OBJECT_TYPE_NAME (self));
+
+      return NULL;
+    }
+
+  return iface->get_model (self);
 }
 
 void
@@ -178,6 +213,25 @@ gtk_mvc_view_query_size (GtkMvcView    * self,
     {
       iface->query_size (self, size);
     }
+}
+
+void
+gtk_mvc_view_queue_redraw (GtkMvcView       * self,
+                           cairo_rectangle_t* area)
+{
+  cairo_rectangle_t  position;
+
+  g_return_if_fail (GTK_MVC_IS_VIEW (self));
+
+  if (!area)
+    {
+      gtk_mvc_view_get_position (self, &position);
+      area = &position;
+    }
+
+  /* FIXME: add the area */
+
+  g_signal_emit (self, signals[QUEUE_REDRAW], 0);
 }
 
 void
