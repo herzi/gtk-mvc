@@ -18,21 +18,30 @@
  * USA
  */
 
-#ifndef GTK_MVC_H
-#define GTK_MVC_H
+#ifndef GTK_MVC_MODEL_H
+#define GTK_MVC_MODEL_H
 
-#include "gtk-mvc-adaptor.h"
-#include "gtk-mvc-button-controller.h"
-#include "gtk-mvc-button-view.h"
-#include "gtk-mvc-controller.h"
-#include "gtk-mvc-default-controller.h"
-#include "gtk-mvc-default-view.h"
-#include "gtk-mvc-model.h"
-#include "gtk-mvc-primitives.h"
-#include "gtk-mvc-scroll-controller.h"
-#include "gtk-mvc-scroll-view.h"
-#include "gtk-mvc-view.h"
+#include <glib-object.h>
 
-#endif /* !GTK_MVC_H */
+G_BEGIN_DECLS
+
+typedef struct _GtkMvcModel      GtkMvcModel;
+typedef struct _GtkMvcModelIface GtkMvcModelIface;
+
+#define GTK_MVC_TYPE_MODEL         (gtk_mvc_model_get_type ())
+#define GTK_MVC_MODEL(i)           (G_TYPE_CHECK_INSTANCE_CAST ((i), GTK_MVC_TYPE_MODEL, GtkMvcModel))
+#define GTK_MVC_IS_MODEL(i)        (G_TYPE_CHECK_INSTANCE_TYPE ((i), GTK_MVC_TYPE_MODEL))
+#define GTK_MVC_MODEL_GET_IFACE(i) (G_TYPE_INSTANCE_GET_INTERFACE ((i), GTK_MVC_TYPE_MODEL, GtkMvcModelIface))
+
+GType gtk_mvc_model_get_type (void);
+
+struct _GtkMvcModelIface
+{
+  GTypeInterface  base_interface;
+};
+
+G_END_DECLS
+
+#endif /* !GTK_MVC_MODEL_H */
 
 /* vim:set et sw=2 cino=t0,f0,(0,{s,>2s,n-1s,^-1s,e2s: */

@@ -22,5 +22,6 @@ Class Overview:
      + GtkMvcScrollModel: the model for the scrollbar implementation
  + GTypeInterface
    + GtkMvcController: the interface resembling the controllers
+   + GtkMvcModel: the interface resembling the models
    + GtkMvcView: the interface resembling the views
 
