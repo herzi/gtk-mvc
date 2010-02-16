@@ -83,7 +83,7 @@ gtk_mvc_view_get_controller (GtkMvcView* self)
 {
   GtkMvcViewIface* iface;
 
-  g_return_if_fail (GTK_MVC_IS_VIEW (self));
+  g_return_val_if_fail (GTK_MVC_IS_VIEW (self), NULL);
 
   iface = GTK_MVC_VIEW_GET_IFACE (self);
   if (!iface->get_controller)
