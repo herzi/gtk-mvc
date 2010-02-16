@@ -9,10 +9,7 @@ Class Overview:
 
  + GObject
    + GInitiallyUnowned
-     + GtkObject
-     | + GtkWidget
-     |   + GtkMvcAdaptor: a GtkWidget that embeds a GtkMvcView/GtkMvcController
-     |     into a GtkContainer (so we have a proper migration path)
+     + GtkMvcButtonModel: a model for the button implementation
      + GtkMvcDefaultController: a noop controller implementation
      | + GtkMvcButtonController: the controller for the button
      | + GtkMvcScrollController: the controller for the scrollbar implementation
@@ -20,6 +17,10 @@ Class Overview:
      | + GtkMvcButtonView: the view for the button
      | + GtkMvcScrollView: the view for the scrollbar implementation
      + GtkMvcScrollModel: the model for the scrollbar implementation
+     + GtkObject
+       + GtkWidget
+         + GtkMvcAdaptor: a GtkWidget that embeds a GtkMvcView/GtkMvcController
+           into a GtkContainer (so we have a proper migration path)
  + GTypeInterface
    + GtkMvcController: the interface resembling the controllers
    + GtkMvcModel: the interface resembling the models

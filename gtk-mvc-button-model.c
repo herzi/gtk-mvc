@@ -18,22 +18,23 @@
  * USA
  */
 
-#ifndef GTK_MVC_H
-#define GTK_MVC_H
-
-#include "gtk-mvc-adaptor.h"
-#include "gtk-mvc-button-controller.h"
 #include "gtk-mvc-button-model.h"
-#include "gtk-mvc-button-view.h"
-#include "gtk-mvc-controller.h"
-#include "gtk-mvc-default-controller.h"
-#include "gtk-mvc-default-view.h"
-#include "gtk-mvc-model.h"
-#include "gtk-mvc-primitives.h"
-#include "gtk-mvc-scroll-controller.h"
-#include "gtk-mvc-scroll-view.h"
-#include "gtk-mvc-view.h"
 
-#endif /* !GTK_MVC_H */
+G_DEFINE_TYPE (GtkMvcButtonModel, gtk_mvc_button_model, G_TYPE_INITIALLY_UNOWNED);
+
+static void
+gtk_mvc_button_model_init (GtkMvcButtonModel* self)
+{}
+
+static void
+gtk_mvc_button_model_class_init (GtkMvcButtonModelClass* self_class)
+{}
+
+GtkMvcModel*
+gtk_mvc_button_model_new (void)
+{
+  return g_object_new (GTK_MVC_TYPE_BUTTON_MODEL,
+                       NULL);
+}
 
 /* vim:set et sw=2 cino=t0,f0,(0,{s,>2s,n-1s,^-1s,e2s: */
