@@ -87,6 +87,14 @@ gtk_mvc_arrow_model_class_init (GtkMvcArrowModelClass* self_class)
   g_type_class_add_private (self_class, sizeof (GtkMvcArrowModelPrivate));
 }
 
+GtkArrowType
+gtk_mvc_arrow_model_get_arrow (GtkMvcArrowModel* self)
+{
+  g_return_val_if_fail (GTK_MVC_IS_ARROW_MODEL (self), GTK_ARROW_NONE);
+
+  return PRIV (self)->arrow;
+}
+
 GtkMvcModel*
 gtk_mvc_arrow_model_new (GtkArrowType  arrow)
 {

@@ -37,8 +37,9 @@ typedef struct _GtkMvcArrowModelPrivate GtkMvcArrowModelPrivate;
 #define GTK_MVC_IS_ARROW_MODEL_CLASS(c)  (G_TYPE_CHECK_CLASS_TYPE ((c), GTK_MVC_TYPE_ARROW_MODEL))
 #define GTK_MVC_ARROW_MODEL_GET_CLASS(i) (G_TYPE_INSTANCE_GET_CLASS ((i), GTK_MVC_TYPE_ARROW_MODEL, GtkMvcArrowModelClass))
 
-GType        gtk_mvc_arrow_model_get_type (void);
-GtkMvcModel* gtk_mvc_arrow_model_new      (GtkArrowType  arrow);
+GType        gtk_mvc_arrow_model_get_type  (void);
+GtkMvcModel* gtk_mvc_arrow_model_new       (GtkArrowType      arrow);
+GtkArrowType gtk_mvc_arrow_model_get_arrow (GtkMvcArrowModel* self);
 
 struct _GtkMvcArrowModel
 {
