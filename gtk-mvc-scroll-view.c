@@ -60,8 +60,8 @@ gtk_scroll_view_init (GtkMvcScrollView* self)
 
   PRIV (self)->button_down = gtk_mvc_button_view_new ();
   gtk_mvc_view_set_model (PRIV (self)->button_down, gtk_mvc_button_model_new ());
-  gtk_mvc_button_view_set_child (GTK_MVC_BUTTON_VIEW (PRIV (self)->button_up),
-                                 gtk_mvc_arrow_view_new_with_model (gtk_mvc_arrow_model_new (GTK_ARROW_UP)));
+  gtk_mvc_button_view_set_child (GTK_MVC_BUTTON_VIEW (PRIV (self)->button_down),
+                                 gtk_mvc_arrow_view_new_with_model (gtk_mvc_arrow_model_new (GTK_ARROW_DOWN)));
   g_signal_connect (PRIV (self)->button_down, "queue-redraw",
                     G_CALLBACK (queue_redraw_from_child), self);
 }
