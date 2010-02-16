@@ -7,3 +7,8 @@
   - HxW => via interface
   - WxH => via interface
   - baseline support => via interface
+
+TESTING:
+ * gtk_mvc_test_gtype (GTYPE)
+   - eg. make sure type != 0
+   - some other things

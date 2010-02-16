@@ -24,13 +24,15 @@
 
 struct _GtkMvcAdaptorPrivate
 {
-  GdkWindow * event_window;
-  GtkMvcView* view;
+  GdkWindow  * event_window;
+  GtkMvcModel* model;
+  GtkMvcView * view;
 };
 
 enum
 {
   PROP_0,
+  PROP_MODEL,
   PROP_VIEW
 };
 
@@ -47,8 +49,29 @@ gtk_mvc_adaptor_init (GtkMvcAdaptor* self)
 }
 
 static void
+constructed (GObject* object)
+{
+  if (G_OBJECT_CLASS (gtk_mvc_adaptor_parent_class)->constructed)
+    {
+      G_OBJECT_CLASS (gtk_mvc_adaptor_parent_class)->constructed (object);
+    }
+
+  if (PRIV (object)->model && PRIV (object)->view)
+    {
+      gtk_mvc_view_set_model (PRIV (object)->view,
+                              PRIV (object)->model);
+    }
+}
+
+static void
 dispose (GObject* object)
 {
+  if (PRIV (object)->model)
+    {
+      g_object_unref (PRIV (object)->model);
+      PRIV (object)->model = NULL;
+    }
+
   if (PRIV (object)->view)
     {
       g_object_unref (PRIV (object)->view);
@@ -76,6 +99,13 @@ set_property (GObject     * object,
 {
   switch (prop_id)
     {
+    case PROP_MODEL:
+      g_return_if_fail (!PRIV (object)->model);
+      g_return_if_fail (!g_value_get_object (value) || GTK_MVC_IS_MODEL (g_value_get_object (value)));
+
+      PRIV (object)->model = g_value_dup_object (value);
+      g_object_notify (object, "model");
+      break;
     case PROP_VIEW:
       g_return_if_fail (!PRIV (object)->view);
       g_return_if_fail (!g_value_get_object (value) || GTK_MVC_IS_VIEW (g_value_get_object (value)));
@@ -240,10 +270,15 @@ gtk_mvc_adaptor_class_init (GtkMvcAdaptorClass* self_class)
   GObjectClass* object_class   = G_OBJECT_CLASS (self_class);
   GtkWidgetClass* widget_class = GTK_WIDGET_CLASS (self_class);
 
+  object_class->constructed  = constructed;
   object_class->dispose      = dispose;
   object_class->get_property = get_property;
   object_class->set_property = set_property;
 
+  g_object_class_install_property (object_class, PROP_MODEL,
+                                   g_param_spec_object ("model", NULL, NULL,
+                                                        G_TYPE_OBJECT,
+                                                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
   g_object_class_install_property (object_class, PROP_VIEW,
                                    g_param_spec_object ("view", NULL, NULL,
                                                         G_TYPE_OBJECT,
@@ -265,6 +300,16 @@ GtkWidget*
 gtk_mvc_adaptor_new (GtkMvcView* view)
 {
   return g_object_new (GTK_MVC_TYPE_ADAPTOR,
+                       "view", view,
+                       NULL);
+}
+
+GtkWidget*
+gtk_mvc_adaptor_new_with_model (GtkMvcModel* model,
+                                GtkMvcView * view)
+{
+  return g_object_new (GTK_MVC_TYPE_ADAPTOR,
+                       "model", model,
                        "view", view,
                        NULL);
 }

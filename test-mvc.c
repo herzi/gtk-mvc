@@ -32,6 +32,12 @@ test_adaptor_constructor (void)
   g_assert_cmpstr (G_OBJECT_TYPE_NAME (widget), ==, "GtkMvcAdaptor");
 
   g_object_unref (widget);
+
+  widget = gtk_mvc_adaptor_new_with_model (gtk_mvc_button_model_new (),
+                                           gtk_mvc_button_view_new ());
+  g_object_ref_sink (widget);
+
+  g_object_unref (widget);
 }
 
 static void
