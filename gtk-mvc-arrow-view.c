@@ -18,24 +18,7 @@
  * USA
  */
 
-#ifndef GTK_MVC_H
-#define GTK_MVC_H
-
-#include "gtk-mvc-adaptor.h"
-#include "gtk-mvc-arrow-model.h"
 #include "gtk-mvc-arrow-view.h"
-#include "gtk-mvc-button-controller.h"
-#include "gtk-mvc-button-model.h"
-#include "gtk-mvc-button-view.h"
-#include "gtk-mvc-controller.h"
-#include "gtk-mvc-default-controller.h"
-#include "gtk-mvc-default-view.h"
-#include "gtk-mvc-model.h"
-#include "gtk-mvc-primitives.h"
-#include "gtk-mvc-scroll-controller.h"
-#include "gtk-mvc-scroll-view.h"
-#include "gtk-mvc-view.h"
 
-#endif /* !GTK_MVC_H */
 
 /* vim:set et sw=2 cino=t0,f0,(0,{s,>2s,n-1s,^-1s,e2s: */
